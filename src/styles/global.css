@@ -288,11 +288,8 @@ a{color:inherit;text-decoration:none}
   /* mobile: imagem (celulares) em cima, texto embaixo */
   .bonus__card{display:block;min-height:0;padding:0;background-image:none}
   .bonus__card::before{display:none}
-  .bonus__mob-img{display:block;width:100%}
-  .bonus__card .txt{max-width:100%;padding:8px 24px 30px}
+  .bonus__card .bonus__mob-img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center top}
+  .bonus__card .txt{max-width:100%;padding:14px 24px 32px}
   .steps{grid-template-columns:1fr}
   .cards3{grid-template-columns:1fr}
-  .bonus__card{grid-template-columns:1fr}
-  .bonus__card .txt{padding:22px 20px}
-  .bonus__card img{aspect-ratio:16/10}
 }
