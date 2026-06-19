@@ -168,11 +168,11 @@ a{color:inherit;text-decoration:none}
 
 /* ---- comparison (cursos vs automação) ---- */
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1040px;margin:34px auto 0}
-.compare .col{border:1px solid #2a2a2a;border-radius:var(--radius);padding:24px 22px;background:#0b0b0b}
-.compare .col-top{width:100%;height:clamp(200px,26vw,330px);object-fit:cover;object-position:top center;
-  border-radius:12px;margin-bottom:22px;display:block}
-.compare .col--bad{border-color:#5a1f1f;background:#120808}
-.compare .col--good{border-color:var(--green-line);background:#07140a;
+.compare .col{border:1px solid #2a2a2a;border-radius:var(--radius);overflow:hidden;
+  padding:clamp(190px,27vw,310px) 24px 30px;
+  background-color:#0b0b0b;background-position:top center;background-size:cover;background-repeat:no-repeat}
+.compare .col--bad{border-color:#5a1f1f;background-color:#120808}
+.compare .col--good{border-color:var(--green-line);background-color:#07140a;
   box-shadow:0 0 40px rgba(30,255,0,.12)}
 .compare h3{margin-bottom:16px;font-size:18px}
 
