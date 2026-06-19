@@ -109,7 +109,24 @@ const faq = [
       <!-- ===== VSL — facade tap-to-play (poster real instantâneo; player vturb só no toque) ===== -->
       <div class="vsl-slot" id="vsl">
         <img class="vsl__poster" src="/assets/poster-vsl.webp" width="404" height="720" alt="Clique para assistir ao vídeo" fetchpriority="high" decoding="async" />
-        <button class="vsl__play" id="vsl-play" type="button" aria-label="Reproduzir vídeo"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button>
+        <button class="vsl__cta" id="vsl-play" type="button" aria-label="Clique para ouvir o vídeo">
+          <span class="vsl__cta-box">
+            <svg class="vsl__cta-icon" viewBox="0 0 120 100" aria-hidden="true" focusable="false">
+              <g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 52 60 15 106 52" />
+                <path d="M24 50V88H96V50" />
+                <path d="M84 44V24H92V40" />
+              </g>
+              <circle cx="40" cy="56" r="6.5" fill="#fff" />
+              <rect x="33" y="63" width="13" height="23" rx="6" fill="#fff" />
+              <circle cx="60" cy="60" r="5" fill="#fff" />
+              <rect x="55" y="66" width="10" height="20" rx="5" fill="#fff" />
+              <circle cx="80" cy="56" r="6.5" fill="#fff" />
+              <path d="M80 63 70 86h20z" fill="#fff" />
+            </svg>
+            <span class="vsl__cta-txt">CLIQUE<br />PARA OUVIR</span>
+          </span>
+        </button>
       </div>
       <script is:inline>
         (function () {

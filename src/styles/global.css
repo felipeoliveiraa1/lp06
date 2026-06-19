@@ -89,13 +89,24 @@ a{color:inherit;text-decoration:none}
   border-radius:16px;overflow:hidden;background:#05140b;cursor:pointer;
   box-shadow:0 0 60px rgba(30,255,0,.16)}
 .vsl__poster{width:100%;height:100%;object-fit:cover;display:block}
-.vsl__play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  border:0;cursor:pointer;background:radial-gradient(circle,rgba(0,0,0,.12),rgba(0,0,0,.5))}
-.vsl__play span{width:82px;height:82px;border-radius:50%;background:rgba(30,255,0,.92);
-  display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(30,255,0,.55);
-  transition:transform .15s}
-.vsl__play:hover span{transform:scale(1.08)}
-.vsl__play svg{width:33px;height:33px;margin-left:5px;fill:#04250a}
+/* overlay "clique para ouvir" estilo vturb: quadrado verde + ícone casa/família
+   + texto, pulsando. SÓ transform/opacity animados (compositado, roda na GPU
+   fora da main thread) -> CLS 0, TBT 0, Speed Index intactos; box-shadow e
+   background são ESTÁTICOS (nunca em keyframe). */
+.vsl__cta{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  border:0;cursor:pointer;background:radial-gradient(circle,rgba(0,0,0,.04),rgba(0,0,0,.42))}
+.vsl__cta-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+  width:56%;max-width:218px;aspect-ratio:1;padding:7% 7% 8%;border-radius:16px;
+  background:#2ba23e;box-shadow:0 12px 36px rgba(0,0,0,.38);
+  transform:translateZ(0) scale(1);will-change:transform;transition:transform .15s ease;
+  animation:vslPulse 2.1s ease-in-out infinite}
+.vsl__cta-icon{width:55%;height:auto;display:block}
+.vsl__cta-txt{color:#fff;font-family:var(--font-head);font-weight:700;
+  font-size:clamp(15px,4.4vw,21px);line-height:1.05;letter-spacing:.4px;
+  text-align:center;text-transform:uppercase}
+.vsl__cta:hover .vsl__cta-box{animation-play-state:paused;transform:translateZ(0) scale(1.05)}
+@keyframes vslPulse{0%,100%{transform:translateZ(0) scale(1)}50%{transform:translateZ(0) scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.vsl__cta-box{animation:none;transform:translateZ(0) scale(1)}}
 .vsl-slot vturb-smartplayer{display:block;width:100%;height:100%}
 
 /* "até quando?" — bg-s2 already contains the Nubank phone + faded red text */
