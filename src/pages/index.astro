@@ -273,18 +273,16 @@ const faq = [
 
   <!-- ============ OFERTA ============ -->
   <section class="section" style="background:#000">
-    <div class="wrap center">
-      <img src={img.mockupOferta} alt="Oferta Automação Lucrativa" loading="lazy" style="max-width:560px;margin:0 auto 26px" />
-      <div class="offer">
-        <h2 class="h3">Garantindo a Automação Lucrativa hoje você vai receber:</h2>
-        <ul class="offer__list">
-          {offerList.map((o) => <li><span>{o[0]}</span><span>→ {o[1]}</span></li>)}
-        </ul>
-        <p class="offer__total">De <span class="offer__strike">R$3.523</span> por apenas:</p>
-        <p class="offer__price">12X R$ 32,85<small>ou R$ 397 à vista</small></p>
-        <a class="btn" href={CHECKOUT} style="margin-top:18px">QUERO TER ACESSO AGORA</a>
-        <img src={img.selos} alt="Formas de pagamento seguras" class="offer__seal" loading="lazy" />
-      </div>
+    <div class="offer">
+      <img class="offer__mockup" src={img.mockupOferta} alt="Tudo que você recebe na Automação Lucrativa" loading="lazy" />
+      <h2 class="offer__title">GARANTINDO A AUTOMAÇÃO LUCRATIVA HOJE VOCÊ VAI RECEBER:</h2>
+      <ul class="offer__list">
+        {offerList.map((o) => <li>{o[0]} <span class="arrow">→</span> {o[1]}</li>)}
+      </ul>
+      <p class="offer__total">Total real: <span class="offer__strike">R$1.929</span></p>
+      <p class="offer__price">12X R$ 32,85<small>ou 397 à vista!</small></p>
+      <a class="btn" href={CHECKOUT}>QUERO TER ACESSO AGORA</a>
+      <img src={img.selos} alt="Formas de pagamento seguras" class="offer__seal" loading="lazy" />
     </div>
   </section>
 
