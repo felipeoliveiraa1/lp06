@@ -41,6 +41,7 @@ const img = {
   selos: A + '898832b786512f24_SELOS-CHECKOUT.svg',
   garantia: A + '1d346509bbd077a2_garantia-7d-2-1.webp',
   autorBg: A + 'bio-bg.webp',
+  autorBgMob: A + 'bio-mob.webp',
   garantiaBg: A + 'wpup_2026-01-bg-garantia.webp',
   alBg: A + 'wpup_2026-01-AL-BG_resultado1.webp',
   cursosBg: A + 'wpup_2026-05-OUTROS-BG1-1.webp',
@@ -287,7 +288,7 @@ const faq = [
   </section>
 
   <!-- ============ AUTOR (Matheus = fundo esquerda / texto direita) ============ -->
-  <section class="bio" style={`background-image:url(${img.autorBg})`}>
+  <section class="bio" style={`--biod:url(${img.autorBg});--biom:url(${img.autorBgMob})`}>
     <div class="bio-content">
       <h2 class="bio-name"><span class="bio-grad">MATHEUS</span><br />OLIVEIRA</h2>
       <p class="bio-lead">É empresário, especialista no mercado forex e criador da Automação Lucrativa.</p>

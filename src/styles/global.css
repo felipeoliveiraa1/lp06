@@ -220,7 +220,7 @@ a{color:inherit;text-decoration:none}
   background:#19a92f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/%3E%3C/svg%3E") center/24px no-repeat}
 
 /* Bio Matheus: imagem à esquerda (fundo), texto à direita */
-.bio{position:relative;background-color:#000;background-repeat:no-repeat;
+.bio{position:relative;background-color:#000;background-repeat:no-repeat;background-image:var(--biod);
   background-position:-120px center;background-size:auto 100%;overflow:hidden;min-height:600px;
   display:flex;align-items:center;justify-content:flex-end;padding:54px clamp(16px,4vw,56px)}
 .bio-content{width:50%;max-width:650px;text-align:left}
@@ -278,11 +278,11 @@ a{color:inherit;text-decoration:none}
   .coma::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.6)}
   .coma-content{width:100%;max-width:none;position:relative;z-index:1}
   .ck-big li{padding-left:56px}
-  .bio{justify-content:center;align-items:flex-end;min-height:500px;padding:0;
-    background-position:center top;background-size:cover}
-  .bio::before{content:"";position:absolute;inset:0;
-    background:linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.5) 42%,rgba(0,0,0,.95))}
-  .bio-content{width:100%;max-width:none;position:relative;z-index:1;text-align:center;padding:0 18px 36px}
+  /* mobile: Matheus (vertical) completo em cima + texto na área escura embaixo */
+  .bio{display:block;min-height:0;padding:0;background-image:var(--biom);
+    background-position:top center;background-size:100% auto}
+  .bio::before{display:none}
+  .bio-content{width:100%;max-width:none;text-align:center;padding:92% 20px 38px}
   .bio-name{font-size:clamp(34px,11vw,56px)}
   .ck-big li::before{width:40px;height:40px;background-size:20px}
   /* mobile: imagem MOB completa de fundo (celulares em cima) + texto na área escura embaixo */
