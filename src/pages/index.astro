@@ -4,7 +4,7 @@ import Base from '../layouts/Base.astro';
 const CHECKOUT = 'https://checkout.payt.com.br/cc074bb1887e88b3e7d9ad747153e157';
 const A = '/assets/';
 const img = {
-  heroBg: A + 'da59245d5b9eca2e_AL-FRIO-1_resultado1.webp',
+  heroBg: A + 'hero-bg.webp',
   bgS2: A + '47cd5dd7a6ee45da_bg-s2_resultado12.webp',
   at: [
     A + '1fbcc6fe5a8dd418_IMG-AT-1_resultado1.webp',
@@ -104,23 +104,31 @@ const faq = [
     </div>
   </header>
 
-  <!-- ============ PAIN ============ -->
-  <section class="section bg-cover" style={`background-image:linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.92)),url(${img.bgS2})`}>
+  <!-- ============ ATÉ QUANDO? (bg-s2 = celular Nubank + motivo) ============ -->
+  <section class="quando">
+    <div class="quando-inner" style={`background-image:url(${img.bgS2})`}>
+      <div class="wrap--narrow center">
+        <h2 class="h2">ATÉ QUANDO VOCÊ VAI VENDER SUA HORA PARA <span class="red">RECEBER UM SALÁRIO QUE MAL PAGA SUAS CONTAS?</span></h2>
+        <p class="lead mt-s">Se você está cansado de ver todo mundo ao seu redor avançando enquanto a sua vida parece estagnada, como se você estivesse preso em um ciclo que nunca acaba, então você provavelmente…</p>
+        <ul class="ck mt-m">
+          <li>Está exausto de trabalhar o dia inteiro enquanto o dinheiro nunca sobra no fim do mês.</li>
+          <li>Já percebeu que está trocando tempo da sua vida por um salário que NUNCA mudará sua realidade.</li>
+          <li>Não aguenta mais enriquecer os outros enquanto você fica no mesmo lugar.</li>
+          <li>Está de saco cheio das pessoas rindo da sua cara quando você diz que vai mudar de vida.</li>
+          <li>Precisa dizer “agora não” para seus filhos mais vezes do que gostaria.</li>
+          <li>Vive sempre apagando incêndios, sem tempo para construir o futuro.</li>
+          <li>Trabalha duro, mas ganha pouco — e todos os meses está no cheque especial.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GRADE DE DEPOIMENTOS (IMG-AT) ============ -->
+  <section class="section--tight">
     <div class="wrap">
       <div class="grid grid-4">
         {img.at.map((s, i) => <img src={s} alt={`Depoimento ${i + 1}`} loading="lazy" decoding="async" />)}
       </div>
-      <h2 class="h2 center mt-l">ATÉ QUANDO VOCÊ VAI VENDER SUA HORA PARA <span class="red">RECEBER UM SALÁRIO QUE MAL PAGA SUAS CONTAS?</span></h2>
-      <p class="lead center mt-s wrap--narrow">Se você está cansado de ver todo mundo ao seu redor avançando enquanto a sua vida parece estagnada, preste atenção:</p>
-      <ul class="ck mt-m">
-        <li>Está exausto de trabalhar o dia inteiro enquanto o dinheiro nunca sobra no fim do mês.</li>
-        <li>Já percebeu que está trocando tempo da sua vida por um salário que NUNCA mudará sua realidade.</li>
-        <li>Não aguenta mais enriquecer os outros enquanto você fica no mesmo lugar.</li>
-        <li>Está de saco cheio das pessoas rindo da sua cara quando você diz que vai mudar de vida.</li>
-        <li>Precisa dizer “agora não” para seus filhos mais vezes do que gostaria.</li>
-        <li>Vive sempre apagando incêndios, sem tempo para construir o futuro.</li>
-        <li>Trabalha duro, mas ganha pouco — e todos os meses está no cheque especial.</li>
-      </ul>
     </div>
   </section>
 

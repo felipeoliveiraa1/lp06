@@ -19,6 +19,8 @@ const { title = 'AL – BIO – A Sociedade Trader' } = Astro.props;
 <!-- brand font (preloaded so headings paint instantly) -->
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/InstrumentSans-600.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/InstrumentSans-500.woff2" />
+<!-- hero background = LCP -->
+<link rel="preload" as="image" href="/assets/hero-bg.webp" fetchpriority="high" />
 
 <!-- Meta Pixel: stub is eager so PageView QUEUES immediately; the heavy
      fbevents/GTM loaders fire on idle/first-interaction (keeps LCP fast,
