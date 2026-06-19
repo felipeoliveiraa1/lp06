@@ -44,6 +44,17 @@ const img = {
   garantiaBg: A + 'wpup_2026-01-bg-garantia.webp',
   alBg: A + 'wpup_2026-01-AL-BG_resultado1.webp',
 };
+// Dores: cada uma é um CARD (imagem em cima + texto embaixo), igual ao original
+const pains = [
+  { i: img.at[0], t: 'Está exausto de trabalhar o dia inteiro enquanto o dinheiro nunca sobra no fim do mês.' },
+  { i: img.at[1], t: 'Já percebeu que está trocando tempo da sua vida por um salário que NUNCA mudará sua realidade.' },
+  { i: img.at[2], t: 'Não aguenta mais enriquecer os outros enquanto você fica no mesmo lugar.' },
+  { i: img.at[3], t: 'Está de saco cheio das pessoas rindo da sua cara quando você diz que vai mudar de vida.' },
+  { i: img.at[4], t: 'Precisa dizer “agora não” para seus filhos mais vezes do que gostaria.' },
+  { i: img.at[5], t: 'Vive sempre apagando incêndios, sem tempo para construir o futuro.' },
+  { i: img.at[6], t: 'Trabalha duro, mas ganha pouco.' },
+  { i: img.at[7], t: 'Todos os meses está no cheque especial.' },
+];
 const bonus = [
   { n: 1, t: 'Aplicativo Interativo Da Automação Lucrativa', p: 'R$97', d: 'Sabe aquela história de “precisar de notebook para começar”? Esquece essa baboseira! Agora você ativa, controla e acompanha a Automação Lucrativa direto do seu celular com um clique.', img: A + 'wpup_2026-05-BONUS-1-DESKTOP_resultado12.webp' },
   { n: 2, t: 'Suporte Individual e Personalizado', p: 'R$247', d: 'Você não vai ficar na mão! Tanto no WhatsApp quanto dentro da Automação você terá um suporte individual para tirar todas as suas dúvidas.', img: A + 'wpup_2026-05-BONUS-2-DESKTOP_resultado12.webp' },
@@ -109,30 +120,20 @@ const faq = [
     </div>
   </header>
 
-  <!-- ============ ATÉ QUANDO? (bg-s2 = celular Nubank + motivo) ============ -->
+  <!-- ============ ATÉ QUANDO? (celular Nubank + cards de dor) ============ -->
   <section class="quando">
     <div class="quando-inner" style={`background-image:url(${img.bgS2})`}>
-      <div class="wrap--narrow center">
-        <h2 class="h2">ATÉ QUANDO VOCÊ VAI VENDER SUA HORA PARA <span class="red">RECEBER UM SALÁRIO QUE MAL PAGA SUAS CONTAS?</span></h2>
-        <p class="lead mt-s">Se você está cansado de ver todo mundo ao seu redor avançando enquanto a sua vida parece estagnada, como se você estivesse preso em um ciclo que nunca acaba, então você provavelmente…</p>
-        <ul class="ck mt-m">
-          <li>Está exausto de trabalhar o dia inteiro enquanto o dinheiro nunca sobra no fim do mês.</li>
-          <li>Já percebeu que está trocando tempo da sua vida por um salário que NUNCA mudará sua realidade.</li>
-          <li>Não aguenta mais enriquecer os outros enquanto você fica no mesmo lugar.</li>
-          <li>Está de saco cheio das pessoas rindo da sua cara quando você diz que vai mudar de vida.</li>
-          <li>Precisa dizer “agora não” para seus filhos mais vezes do que gostaria.</li>
-          <li>Vive sempre apagando incêndios, sem tempo para construir o futuro.</li>
-          <li>Trabalha duro, mas ganha pouco — e todos os meses está no cheque especial.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ GRADE DE DEPOIMENTOS (IMG-AT) ============ -->
-  <section class="section--tight">
-    <div class="wrap">
-      <div class="grid grid-4">
-        {img.at.map((s, i) => <img src={s} alt={`Depoimento ${i + 1}`} loading="lazy" decoding="async" />)}
+      <div class="wrap center">
+        <h2 class="h2 wrap--narrow" style="margin-inline:auto">ATÉ QUANDO VOCÊ VAI VENDER SUA HORA PARA <span class="red">RECEBER UM SALÁRIO QUE MAL PAGA SUAS CONTAS?</span></h2>
+        <p class="lead mt-s wrap--narrow" style="margin:14px auto 0">Se você está cansado de ver todo mundo ao seu redor avançando enquanto a sua vida parece estagnada, como se você estivesse preso em um ciclo que nunca acaba, então você provavelmente…</p>
+        <div class="pain-cards">
+          {pains.map((p) => (
+            <figure>
+              <img src={p.i} alt="" loading="lazy" decoding="async" />
+              <figcaption>{p.t}</figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </div>
   </section>
