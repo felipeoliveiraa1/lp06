@@ -352,7 +352,7 @@ a{color:inherit;text-decoration:none}
 .accept-btn:hover{animation-play-state:paused;transform:translateZ(0) scale(1.03)}
 @keyframes acPulse{0%,100%{transform:translateZ(0) scale(1)}50%{transform:translateZ(0) scale(1.04)}}
 /* link de recusa */
-.decline{display:inline-block;margin:18px auto 0;color:var(--gray-3);
-  font-size:14px;text-decoration:underline;text-underline-offset:3px}
-.decline:hover{color:var(--gray)}
+.decline{display:inline-block;margin:18px auto 0;color:var(--red);font-weight:600;
+  font-size:15px;text-decoration:underline;text-underline-offset:3px}
+.decline:hover{color:#ff8585}
 @media (prefers-reduced-motion:reduce){.accept-btn{animation:none}}
