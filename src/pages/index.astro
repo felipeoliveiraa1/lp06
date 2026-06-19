@@ -40,7 +40,7 @@ const img = {
   mockupOferta: A + '26ab166ffccc3f53_MOCKUP-OFERTA-AL-1-1.webp',
   selos: A + '898832b786512f24_SELOS-CHECKOUT.svg',
   garantia: A + '1d346509bbd077a2_garantia-7d-2-1.webp',
-  autorBg: A + 'wpup_2026-05-BIO-MATHEUS-OLI-MOV-1.webp',
+  autorBg: A + 'bio-bg.webp',
   garantiaBg: A + 'wpup_2026-01-bg-garantia.webp',
   alBg: A + 'wpup_2026-01-AL-BG_resultado1.webp',
   cursosBg: A + 'wpup_2026-05-OUTROS-BG1-1.webp',
@@ -286,12 +286,15 @@ const faq = [
     </div>
   </section>
 
-  <!-- ============ AUTOR (Matheus de fundo) ============ -->
-  <section class="section has-bg" style={`background-image:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.55) 60%,rgba(0,0,0,.85)),url(${img.autorBg});background-position:center 18%;min-height:560px;display:flex;align-items:flex-end`}>
-    <div class="author">
-      <h2 class="h2">Matheus <span class="green">Oliveira</span></h2>
-      <p class="lead">É empresário, especialista no mercado forex e criador da Automação Lucrativa.</p>
-      <p class="muted">Como a grande maioria, já fez de tudo, ganhou pouco e viveu por muitos anos completamente estagnado. Depois de anos testando promessas vazias, encontrou no Forex uma forma legítima de ganhar em dólar. Hoje, Matheus estruturou um sistema de automação com inteligência artificial capaz de operar e lucrar de forma consistente. A Sociedade do Trader nasceu para reunir homens que querem alcançar resultados acima da média.</p>
+  <!-- ============ AUTOR (Matheus = fundo esquerda / texto direita) ============ -->
+  <section class="bio" style={`background-image:url(${img.autorBg})`}>
+    <div class="bio-content">
+      <h2 class="bio-name"><span class="bio-grad">MATHEUS</span><br />OLIVEIRA</h2>
+      <p class="bio-lead">É empresário, especialista no mercado forex e criador da Automação Lucrativa.</p>
+      <p>Como a grande maioria, já fez de tudo, ganhou pouco e viveu por muitos anos completamente estagnado.</p>
+      <p>Depois de anos testando promessas vazias, ele encontrou no Forex uma forma legítima de ganhar em dólar, sem depender de sorte, exposição ou conhecimento técnico.</p>
+      <p>Hoje, Matheus estruturou um sistema de automação com inteligência artificial, capaz de operar em mesas proprietárias e gerar até 4 mil dólares por mês no mercado mais lucrativo do mundo.</p>
+      <p>A Sociedade do Trader nasceu para reunir homens que querem alcançar resultados acima da média e usar a Automação Lucrativa para construir uma vida financeira sólida, com liberdade de tempo e geográfica.</p>
     </div>
   </section>
 
