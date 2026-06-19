@@ -9,18 +9,24 @@ const { title = 'AL – BIO – A Sociedade Trader' } = Astro.props;
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>{title}</title>
 <meta name="robots" content="max-image-preview:large" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+<!-- vturb optimizer: marca o relógio do player o quanto antes (otimizador oficial) -->
+<script is:inline>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
 
 <!-- open connections early (VSL stream, Pixel, GTM) -->
 <link rel="preconnect" href="https://scripts.converteai.net" crossorigin />
 <link rel="preconnect" href="https://cdn.converteai.net" crossorigin />
 <link rel="preconnect" href="https://images.converteai.net" crossorigin />
+<link rel="dns-prefetch" href="https://license.vturb.com" />
 <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
 <link rel="preconnect" href="https://www.googletagmanager.com" />
 <!-- brand font (preloaded so headings paint instantly) -->
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/InstrumentSans-600.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/InstrumentSans-500.woff2" />
-<!-- hero background = LCP -->
+<!-- above-the-fold images = LCP candidates (hero bg + poster da VSL) -->
 <link rel="preload" as="image" href="/assets/hero-bg.webp" fetchpriority="high" />
+<link rel="preload" as="image" href="/assets/poster-vsl.webp" fetchpriority="high" />
 
 <!-- Meta Pixel: stub is eager so PageView QUEUES immediately; the heavy
      fbevents/GTM loaders fire on idle/first-interaction (keeps LCP fast,
@@ -33,6 +39,12 @@ window.dataLayer=window.dataLayer||[];
   var f=document.createElement('script');f.async=true;f.src='https://connect.facebook.net/en_US/fbevents.js';document.head.appendChild(f);
   window.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.start'});
   var g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtm.js?id=GTM-TXZ8KFR7';document.head.appendChild(g);
+  // warm the VSL player on first engagement (prefetch = low priority, não atrapalha
+  // o LCP) p/ que o toque no play seja instantâneo, sem baixar o vídeo pesado antes.
+  [['https://scripts.converteai.net/c7c1994f-acfe-4862-a800-81af24e8e9fe/players/6a349259a7b4179972eb92a5/v4/player.js'],
+   ['https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js']].forEach(function(u){
+    var l=document.createElement('link');l.rel='prefetch';l.as='script';l.href=u[0];document.head.appendChild(l);
+  });
 }
 // fire on the first engagement (the VSL play tap, a scroll, etc.). The page is
 // already fast, so the Pixel fires the moment the user engages — connect rate
