@@ -43,6 +43,7 @@ const img = {
   autorBg: A + 'wpup_2026-05-BIO-MATHEUS-OLI-MOV-1.webp',
   garantiaBg: A + 'wpup_2026-01-bg-garantia.webp',
   alBg: A + 'wpup_2026-01-AL-BG_resultado1.webp',
+  cursosBg: A + 'wpup_2026-05-OUTROS-BG1-1.webp',
 };
 // Dores: cada uma é um CARD (imagem em cima + texto embaixo), igual ao original
 const pains = [
@@ -179,6 +180,7 @@ const faq = [
       <h2 class="h2 wrap--narrow">A AUTOMAÇÃO LUCRATIVA É DIFERENTE DE TUDO O QUE VOCÊ JÁ VIU!</h2>
       <div class="compare">
         <div class="col col--bad">
+          <img class="col-top" src={img.cursosBg} alt="" loading="lazy" />
           <h3 class="red">Cursos de renda extra, apostas, robô do pix e etc…</h3>
           <ul class="ck xk">
             <li>Quem ensina nunca mostra o próprio rosto.</li>
@@ -190,6 +192,7 @@ const faq = [
           </ul>
         </div>
         <div class="col col--good">
+          <img class="col-top" src={img.alBg} alt="" loading="lazy" />
           <h3 class="green">Automação Lucrativa</h3>
           <ul class="ck">
             <li>Seu mentor foi um dos primeiros a bater 2 milhões de lucros, documentando os resultados.</li>
