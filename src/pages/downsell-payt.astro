@@ -5,8 +5,8 @@ import PaytButton from '../components/PaytButton.astro';
 const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js';
 ---
 <Funnel title="DOWNSELL PAYT – A Sociedade Trader" poster="/assets/poster-downsell-payt.webp">
-  <!-- gate: esconde a oferta (copy + botões) até 1:35 após o play -->
-  <script is:inline>try{if(!localStorage.getItem('al_dn01_revealed'))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
+  <!-- gate: esconde a oferta (copy + botões) até 1:30 após o play -->
+  <script is:inline>try{if(!localStorage.getItem('al_dn01_revealed')&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
   <div class="scarcity">⚠️ IMPORTANTE: ESSA PÁGINA SAIRÁ DO AR EM <span id="cd">15:00</span></div>
   <main class="funnel">
     <div class="funnel-wrap">
@@ -23,14 +23,16 @@ const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js'
     </div>
   </main>
   <script is:inline src={PAYT}></script>
-  <!-- reveal timer: 1:35 após o play -->
+  <!-- reveal timer: 1:30 após o play. Robusto a 2º plano (Date.now) + ?preview p/ QA. -->
   <script is:inline>
     (function () {
-      var DELAY = 95 * 1000; // 1:35 = 95s
-      var KEY = 'al_dn01_revealed', scheduled = false;
-      function reveal() { document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} }
-      try { if (localStorage.getItem(KEY)) reveal(); } catch (e) {}
-      window.__startVslTimer = function () { if (scheduled) return; scheduled = true; setTimeout(reveal, DELAY); };
+      var DELAY = 90 * 1000; // 1:30 = 90s
+      var KEY = 'al_dn01_revealed', started = 0, iv = null;
+      function reveal() { document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} if (iv) { clearInterval(iv); iv = null; } }
+      function check() { if (started && Date.now() - started >= DELAY) reveal(); }
+      try { if (/[?&]preview/.test(location.search)) { document.documentElement.classList.remove('gated'); return; } } catch (e) {}
+      try { if (localStorage.getItem(KEY)) { reveal(); return; } } catch (e) {}
+      window.__startVslTimer = function () { if (started) return; started = Date.now(); setTimeout(reveal, DELAY); iv = setInterval(check, 1000); document.addEventListener('visibilitychange', check); window.addEventListener('focus', check); };
     })();
   </script>
 </Funnel>

@@ -5,9 +5,9 @@ import PaytButton from '../components/PaytButton.astro';
 const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js';
 ---
 <Funnel title="UPSELL 01 PAYT – A Sociedade Trader" poster="/assets/poster-upsell-01.webp">
-  <!-- gate: esconde os botões até 5:00 após o play. Roda antes da pintura (sem flash);
+  <!-- gate: esconde os botões até 4:14 após o play. Roda antes da pintura (sem flash);
        sem JS, nada é escondido (fallback). -->
-  <script is:inline>try{if(!localStorage.getItem('al_up01_revealed'))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
+  <script is:inline>try{if(!localStorage.getItem('al_up01_revealed')&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
   <div class="scarcity">⚠️ IMPORTANTE: ESSA PÁGINA SAIRÁ DO AR EM <span id="cd">15:00</span></div>
   <main class="funnel">
     <div class="funnel-wrap">
@@ -25,19 +25,26 @@ const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js'
     </div>
   </main>
   <script is:inline src={PAYT}></script>
-  <!-- reveal timer: 5:00 após o play; uma vez revelado, persiste -->
+  <!-- reveal timer: 4:14 após o play. Robusto a 2º plano (Date.now) + ?preview p/ QA. -->
   <script is:inline>
     (function () {
-      var DELAY = 5 * 60 * 1000; // 5:00 = 300s
-      var KEY = 'al_up01_revealed', scheduled = false;
+      var DELAY = (4 * 60 + 14) * 1000; // 4:14 = 254s
+      var KEY = 'al_up01_revealed', started = 0, iv = null;
       function reveal() {
         document.documentElement.classList.remove('gated');
         try { localStorage.setItem(KEY, '1'); } catch (e) {}
+        if (iv) { clearInterval(iv); iv = null; }
       }
-      try { if (localStorage.getItem(KEY)) reveal(); } catch (e) {}
+      function check() { if (started && Date.now() - started >= DELAY) reveal(); }
+      try { if (/[?&]preview/.test(location.search)) { document.documentElement.classList.remove('gated'); return; } } catch (e) {}
+      try { if (localStorage.getItem(KEY)) { reveal(); return; } } catch (e) {}
       window.__startVslTimer = function () {
-        if (scheduled) return; scheduled = true;
+        if (started) return;
+        started = Date.now();
         setTimeout(reveal, DELAY);
+        iv = setInterval(check, 1000);
+        document.addEventListener('visibilitychange', check);
+        window.addEventListener('focus', check);
       };
     })();
   </script>

@@ -98,8 +98,8 @@ const faq = [
 ---
 <Base>
   <!-- gate: esconde botão da hero + tudo abaixo até o play completar 16:35.
-       Roda antes da pintura (sem flash). Sem JS, nada é escondido (fallback). -->
-  <script is:inline>try{if(!localStorage.getItem('al_vsl_revealed'))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
+       Roda antes da pintura (sem flash). Sem JS / com ?preview, nada é escondido. -->
+  <script is:inline>try{if(!localStorage.getItem('al_vsl_revealed')&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
 
   <!-- ============ HERO ============ -->
   <header class="hero" style={`background-image:url(${img.heroBg})`}>
@@ -371,19 +371,27 @@ const faq = [
   </footer>
   </div><!-- /#below -->
 
-  <!-- reveal timer: 16min35s após o play; uma vez revelado, persiste (não esconde de novo) -->
+  <!-- reveal timer: 16:35 após o play. Robusto a aba em 2º plano (ancorado em Date.now
+       + checagem ao voltar pra aba). ?preview revela na hora (QA). Persiste após revelar. -->
   <script is:inline>
     (function () {
       var DELAY = (16 * 60 + 35) * 1000; // 16:35 = 995s
-      var KEY = 'al_vsl_revealed', scheduled = false;
+      var KEY = 'al_vsl_revealed', started = 0, iv = null;
       function reveal() {
         document.documentElement.classList.remove('gated');
         try { localStorage.setItem(KEY, '1'); } catch (e) {}
+        if (iv) { clearInterval(iv); iv = null; }
       }
-      try { if (localStorage.getItem(KEY)) reveal(); } catch (e) {}
+      function check() { if (started && Date.now() - started >= DELAY) reveal(); }
+      try { if (/[?&]preview/.test(location.search)) { document.documentElement.classList.remove('gated'); return; } } catch (e) {}
+      try { if (localStorage.getItem(KEY)) { reveal(); return; } } catch (e) {}
       window.__startVslTimer = function () {
-        if (scheduled) return; scheduled = true;
+        if (started) return;
+        started = Date.now();
         setTimeout(reveal, DELAY);
+        iv = setInterval(check, 1000);
+        document.addEventListener('visibilitychange', check);
+        window.addEventListener('focus', check);
       };
     })();
   </script>

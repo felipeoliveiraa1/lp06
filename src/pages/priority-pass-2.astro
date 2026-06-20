@@ -6,7 +6,7 @@ const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js'
 ---
 <Funnel title="PRIORITY PASS 2 – A Sociedade Trader" poster="/assets/poster-downsell-payt.webp">
   <!-- gate: esconde os botões até 0:40 após o play -->
-  <script is:inline>try{if(!localStorage.getItem('al_up02_revealed'))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
+  <script is:inline>try{if(!localStorage.getItem('al_up02_revealed')&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
   <div class="scarcity">⚠️ MARQUE SUA CONFIGURAÇÃO BLINDADA</div>
   <main class="funnel">
     <div class="funnel-wrap">
@@ -20,14 +20,16 @@ const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js'
     </div>
   </main>
   <script is:inline src={PAYT}></script>
-  <!-- reveal timer: 0:40 após o play -->
+  <!-- reveal timer: 0:40 após o play. Robusto a 2º plano (Date.now) + ?preview p/ QA. -->
   <script is:inline>
     (function () {
       var DELAY = 40 * 1000; // 0:40 = 40s
-      var KEY = 'al_up02_revealed', scheduled = false;
-      function reveal() { document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} }
-      try { if (localStorage.getItem(KEY)) reveal(); } catch (e) {}
-      window.__startVslTimer = function () { if (scheduled) return; scheduled = true; setTimeout(reveal, DELAY); };
+      var KEY = 'al_up02_revealed', started = 0, iv = null;
+      function reveal() { document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} if (iv) { clearInterval(iv); iv = null; } }
+      function check() { if (started && Date.now() - started >= DELAY) reveal(); }
+      try { if (/[?&]preview/.test(location.search)) { document.documentElement.classList.remove('gated'); return; } } catch (e) {}
+      try { if (localStorage.getItem(KEY)) { reveal(); return; } } catch (e) {}
+      window.__startVslTimer = function () { if (started) return; started = Date.now(); setTimeout(reveal, DELAY); iv = setInterval(check, 1000); document.addEventListener('visibilitychange', check); window.addEventListener('focus', check); };
     })();
   </script>
 </Funnel>
