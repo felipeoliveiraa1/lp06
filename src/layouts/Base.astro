@@ -26,6 +26,10 @@ const { title = 'AL – BIO – A Sociedade Trader' } = Astro.props;
 <!-- above-the-fold images = LCP candidates (hero bg + poster da VSL) -->
 <link rel="preload" as="image" href="/assets/hero-bg.webp" fetchpriority="high" />
 <link rel="preload" as="image" href="/assets/poster-vsl.webp" fetchpriority="high" />
+<!-- vturb optimizer: pré-carrega player + smartplayer + stream p/ autoplay rápido -->
+<link rel="preload" href="https://scripts.converteai.net/c7c1994f-acfe-4862-a800-81af24e8e9fe/players/6a349259a7b4179972eb92a5/v4/player.js" as="script" />
+<link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script" />
+<link rel="preload" href="https://cdn.converteai.net/c7c1994f-acfe-4862-a800-81af24e8e9fe/69ec101855df2a8c62799c1c/main.m3u8" as="fetch" crossorigin />
 
 <!-- Google Tag Manager -->
 <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
