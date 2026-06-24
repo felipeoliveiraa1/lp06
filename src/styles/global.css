@@ -191,13 +191,15 @@ a{color:inherit;text-decoration:none}
 /* ---- steps ---- */
 .steps{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:900px;margin:34px auto 0}
 .step{border:1px solid #1f2a1f;border-radius:var(--radius);overflow:hidden;background:#0a0d0a}
-.step img{width:100%}
+.step img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:center 35%}
 .step .body{padding:18px}
 .step .num{color:var(--green);font-family:var(--font-head);font-weight:600;text-transform:uppercase}
 
 /* ---- "para quem" ---- */
 .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:980px;margin:30px auto 0}
 .cards3 figure{border:1px solid #1f2a1f;border-radius:var(--radius);overflow:hidden;background:#0a0d0a}
+/* unifica as 3 imagens (mesmo tamanho) + centraliza o recorte -> corrige o "torto" */
+.cards3 img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center}
 .cards3 figcaption{padding:16px;color:var(--gray);font-size:15px}
 
 /* ---- bonus cards (the BONUS-N image IS the full card background) ---- */
