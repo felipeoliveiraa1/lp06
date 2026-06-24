@@ -97,7 +97,7 @@ const faq = [
 ];
 ---
 <Base>
-  <!-- gate: esconde botão da hero + tudo abaixo até o play completar 16:35.
+  <!-- gate: esconde botão da hero + tudo abaixo até o play completar 14:03.
        Roda antes da pintura (sem flash). Sem JS / com ?preview, nada é escondido. -->
   <script is:inline>try{if(!localStorage.getItem('al_vsl_revealed')&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
 
@@ -158,7 +158,7 @@ const faq = [
     </div>
   </header>
 
-  <!-- tudo abaixo da hero fica escondido até o reveal (16:35 após o play) -->
+  <!-- tudo abaixo da hero fica escondido até o reveal (14:03 após o play) -->
   <div class="gate" id="below">
   <!-- ============ ATÉ QUANDO? (celular Nubank + cards de dor) ============ -->
   <section class="quando">
@@ -371,11 +371,11 @@ const faq = [
   </footer>
   </div><!-- /#below -->
 
-  <!-- reveal timer: 16:35 após o play. Robusto a aba em 2º plano (ancorado em Date.now
+  <!-- reveal timer: 14:03 após o play. Robusto a aba em 2º plano (ancorado em Date.now
        + checagem ao voltar pra aba). ?preview revela na hora (QA). Persiste após revelar. -->
   <script is:inline>
     (function () {
-      var DELAY = (16 * 60 + 35) * 1000; // 16:35 = 995s
+      var DELAY = (14 * 60 + 3) * 1000; // 14:03 = 843s
       var KEY = 'al_vsl_revealed', started = 0, iv = null;
       function reveal() {
         document.documentElement.classList.remove('gated');
