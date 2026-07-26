@@ -104,45 +104,12 @@ const faq = [
   <!-- ============ HERO ============ -->
   <header class="hero" style={`background-image:url(${img.heroBg})`}>
     <div class="wrap--narrow">
-      <!-- ===== VSL — facade tap-to-play (poster real instantâneo; player vturb só no toque) ===== -->
+      <!-- ===== VSL — player nativo do vturb (carrega no load = play-rate real) ===== -->
       <div class="vsl-slot" id="vsl">
-        <img class="vsl__poster" src="/assets/poster-vsl.webp" width="404" height="720" alt="Clique para assistir ao vídeo" fetchpriority="high" decoding="async" />
-        <button class="vsl__cta" id="vsl-play" type="button" aria-label="Clique para ouvir o vídeo">
-          <span class="vsl__cta-box">
-            <svg class="vsl__cta-icon" viewBox="0 0 120 100" aria-hidden="true" focusable="false">
-              <g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 52 60 15 106 52" />
-                <path d="M24 50V88H96V50" />
-                <path d="M84 44V24H92V40" />
-              </g>
-              <circle cx="40" cy="56" r="6.5" fill="#fff" />
-              <rect x="33" y="63" width="13" height="23" rx="6" fill="#fff" />
-              <circle cx="60" cy="60" r="5" fill="#fff" />
-              <rect x="55" y="66" width="10" height="20" rx="5" fill="#fff" />
-              <circle cx="80" cy="56" r="6.5" fill="#fff" />
-              <path d="M80 63 70 86h20z" fill="#fff" />
-            </svg>
-            <span class="vsl__cta-txt">CLIQUE<br />PARA OUVIR</span>
-          </span>
-        </button>
+        <vturb-smartplayer id="vid-6a3d294db84c1d6bd606610f" style="display:block;width:100%;height:100%"></vturb-smartplayer>
       </div>
       <script is:inline>
-        (function () {
-          var box = document.getElementById('vsl'); if (!box) return;
-          var done = false;
-          function play() {
-            if (done) return; done = true;
-            var el = document.createElement('vturb-smartplayer');
-            el.id = 'vid-6a3d294db84c1d6bd606610f';
-            el.setAttribute('style', 'display:block;width:100%;height:100%');
-            box.innerHTML = ''; box.appendChild(el);
-            var s = document.createElement('script');
-            s.src = 'https://scripts.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/players/6a3d294db84c1d6bd606610f/v4/player.js';
-            s.async = true; document.head.appendChild(s);
-            if (window.__startVslTimer) window.__startVslTimer(); // começa a contagem do reveal no play
-          }
-          box.addEventListener('click', play, { once: true });
-        })();
+        (function(){var s=document.createElement('script');s.src='https://scripts.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/players/6a3d294db84c1d6bd606610f/v4/player.js';s.async=true;document.head.appendChild(s);})();
       </script>
 
       <div class="gate" id="hero-cta">
@@ -365,28 +332,23 @@ const faq = [
   </footer>
   </div><!-- /#below -->
 
-  <!-- reveal timer: 13:55 após o play. Robusto a aba em 2º plano (ancorado em Date.now
-       + checagem ao voltar pra aba). ?preview revela na hora (QA). Persiste após revelar. -->
+  <!-- reveal: hero-cta + tudo abaixo aparecem quando o VÍDEO chega em 13:55 (currentTime
+       real do player vturb). ?preview revela na hora (QA). Persiste. Fail-open se o
+       player não carregar (adblock) — não esconde a venda. -->
   <script is:inline>
     (function () {
-      var DELAY = (13 * 60 + 55) * 1000; // 13:55 = 835s
-      var KEY = 'al_vsl_revealed', started = 0, iv = null;
+      var PITCH = 13 * 60 + 55; // 13:55 = 835s de vídeo
+      var KEY = 'al_vsl_revealed', iv = null, t0 = Date.now(), saw = false;
       function reveal() {
         document.documentElement.classList.remove('gated');
         try { localStorage.setItem(KEY, '1'); } catch (e) {}
         if (iv) { clearInterval(iv); iv = null; }
       }
-      function check() { if (started && Date.now() - started >= DELAY) reveal(); }
+      function vtime() { try { var a = (window.smartplayer && window.smartplayer.instances) || []; for (var i = 0; i < a.length; i++) { var t = a[i] && a[i].instance && a[i].instance.currentTime; if (typeof t === 'number' && isFinite(t)) return t; } } catch (e) {} return -1; }
+      function check() { var t = vtime(); if (t >= 0) saw = true; if (t >= PITCH) return reveal(); if (!saw && Date.now() - t0 > 30000) reveal(); }
       try { if (/[?&]preview/.test(location.search)) { document.documentElement.classList.remove('gated'); return; } } catch (e) {}
       try { if (localStorage.getItem(KEY)) { reveal(); return; } } catch (e) {}
-      window.__startVslTimer = function () {
-        if (started) return;
-        started = Date.now();
-        setTimeout(reveal, DELAY);
-        iv = setInterval(check, 1000);
-        document.addEventListener('visibilitychange', check);
-        window.addEventListener('focus', check);
-      };
+      iv = setInterval(check, 1000);
     })();
   </script>
 </Base>

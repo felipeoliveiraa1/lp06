@@ -23,16 +23,18 @@ const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js'
     </div>
   </main>
   <script is:inline src={PAYT}></script>
-  <!-- reveal timer: 1:30 após o play. Robusto a 2º plano (Date.now) + ?preview p/ QA. -->
+  <!-- reveal: oferta aparece quando o VÍDEO chega em 1:30 (currentTime real do player vturb).
+       ?preview revela na hora (QA). Persiste. Fail-open se o player não carregar (adblock). -->
   <script is:inline>
     (function () {
-      var DELAY = 90 * 1000; // 1:30 = 90s
-      var KEY = 'al_dn01_revealed', started = 0, iv = null;
+      var PITCH = 90; // 1:30 = 90s de vídeo
+      var KEY = 'al_dn01_revealed', iv = null, t0 = Date.now(), saw = false;
       function reveal() { document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} if (iv) { clearInterval(iv); iv = null; } }
-      function check() { if (started && Date.now() - started >= DELAY) reveal(); }
+      function vtime() { try { var a = (window.smartplayer && window.smartplayer.instances) || []; for (var i = 0; i < a.length; i++) { var t = a[i] && a[i].instance && a[i].instance.currentTime; if (typeof t === 'number' && isFinite(t)) return t; } } catch (e) {} return -1; }
+      function check() { var t = vtime(); if (t >= 0) saw = true; if (t >= PITCH) return reveal(); if (!saw && Date.now() - t0 > 30000) reveal(); }
       try { if (/[?&]preview/.test(location.search)) { document.documentElement.classList.remove('gated'); return; } } catch (e) {}
       try { if (localStorage.getItem(KEY)) { reveal(); return; } } catch (e) {}
-      window.__startVslTimer = function () { if (started) return; started = Date.now(); setTimeout(reveal, DELAY); iv = setInterval(check, 1000); document.addEventListener('visibilitychange', check); window.addEventListener('focus', check); };
+      iv = setInterval(check, 1000);
     })();
   </script>
 </Funnel>
