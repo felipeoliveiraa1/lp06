@@ -11,23 +11,23 @@ const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js'
   <main class="funnel">
     <div class="funnel-wrap">
       <h1 class="funnel-title">Eu não <span class="green">ACREDITO</span> que você vai obrigar a fazer isso</h1>
-      <Vsl playerId="vid-6a3d2957fcb54795331e3ec8" poster="/assets/poster-downsell-payt.webp" />
+      <Vsl playerId="vid-6a3d1f804d2b4d3fb0012085" poster="/assets/poster-downsell-payt.webp" />
       <div class="gate" id="dn01-cta">
         <p class="funnel-sub">Essa será a sua última oportunidade de conseguir ter acesso a <strong>Configuração Blindada</strong>.</p>
         <p class="funnel-sub">Você já entende que acesso a Configuração Blindada te fará ter ainda mais resultado com menos esforço, né?</p>
         <p class="funnel-sub">Então, somente aqui e agora você poderá desbloquear o seu acesso com <strong>100 REAIS OFF</strong> de desconto tocando no botão abaixo…</p>
         <p class="funnel-price">De R$697 por <span class="green">R$597</span>.<small>Você também pode parcelar em até 12x. CORRE antes que saia do ar.</small></p>
-        <PaytButton object="LYGKBL-LGBKW6" label="QUERO GARANTIR COM 100 REAIS DE DESCONTO." />
+        <PaytButton object="4ZEM94-LGBKW6" label="SIM, QUERO GARANTIR COM 10% DE DESCONTO" installments />
         <a class="decline" href="/downsell-2-payt/">NÃO QUERO ESSA OFERTA</a>
       </div>
     </div>
   </main>
   <script is:inline src={PAYT}></script>
-  <!-- reveal: oferta aparece quando o VÍDEO chega em 1:30 (currentTime real do player vturb).
+  <!-- reveal: oferta aparece quando o VÍDEO chega em 1:00 (currentTime real do player vturb).
        ?preview revela na hora (QA). Persiste. Fail-open se o player não carregar (adblock). -->
   <script is:inline>
     (function () {
-      var PITCH = 90; // 1:30 = 90s de vídeo
+      var PITCH = 60; // 1:00 = 60s de vídeo
       var KEY = 'al_dn01_revealed', iv = null, t0 = Date.now(), saw = false;
       function reveal() { document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} if (iv) { clearInterval(iv); iv = null; } }
       function vtime() { try { var a = (window.smartplayer && window.smartplayer.instances) || []; for (var i = 0; i < a.length; i++) { var t = a[i] && a[i].instance && a[i].instance.currentTime; if (typeof t === 'number' && isFinite(t)) return t; } } catch (e) {} return -1; }

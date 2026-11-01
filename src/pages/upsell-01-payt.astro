@@ -5,9 +5,9 @@ import PaytButton from '../components/PaytButton.astro';
 const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js';
 ---
 <Funnel title="UPSELL 01 PAYT – A Sociedade Trader" poster="/assets/poster-upsell-01.webp">
-  <!-- gate: esconde os botões até 4:14 após o play. Roda antes da pintura (sem flash);
-       sem JS, nada é escondido (fallback). -->
-  <script is:inline>try{if(!localStorage.getItem('al_up01_revealed')&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
+  <!-- gate: esconde os botões até o vídeo chegar em 4:10. Roda antes da pintura (sem
+       flash); sem JS, nada é escondido (fallback). -->
+  <script is:inline>try{if(!localStorage.getItem('al_up01_revealed_v3')&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
   <div class="scarcity">⚠️ IMPORTANTE: ESSA PÁGINA SAIRÁ DO AR EM <span id="cd">15:00</span></div>
   <main class="funnel">
     <div class="funnel-wrap">
@@ -17,20 +17,23 @@ const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js'
         <li class="is-now"><span class="ic">⚙️</span> Passo 2: Configuração blindada</li>
         <li><span class="ic">⏳</span> Passo 3: Compra concluída!</li>
       </ul>
-      <Vsl playerId="vid-6a3d2953ac7ae1f31843c7a8" poster="/assets/poster-upsell-01.webp" />
+      <Vsl playerId="vid-6a3d2078ab74e8fd0f267310" />
       <div class="gate" id="up01-cta">
-        <PaytButton object="LQO5E4-R2JNEO" label="QUERO GARANTIR MINHA CONFIGURAÇÃO BLINDADA." />
+        <PaytButton object="4MGBV4-R2JNEO" label="QUERO GARANTIR A CONFIGURAÇÃO BLINDADA" installments />
         <a class="decline" href="/downsell-payt/">NÃO QUERO ESSA OFERTA</a>
       </div>
     </div>
   </main>
   <script is:inline src={PAYT}></script>
-  <!-- reveal: CTA aparece quando o VÍDEO chega em 4:14 (currentTime real do player vturb).
+  <!-- reveal: CTA aparece quando o VÍDEO chega em 4:10 (currentTime real do player vturb).
        ?preview revela na hora (QA). Persiste. Fail-open se o player não carregar (adblock). -->
   <script is:inline>
     (function () {
-      var PITCH = 4 * 60 + 14; // 4:14 = 254s de vídeo
-      var KEY = 'al_up01_revealed', iv = null, t0 = Date.now(), saw = false;
+      // Volta a VSL de R$697 (vid-6a3d2078, midia 6a3d204e, 5:25) — a de R$997
+      // (6aa9c807) saiu. 4:10 e o tempo que ja rodava com ESTE video; o Matheus
+      // lembrava de 4:15, 5s depois. Ler sempre na linha do tempo do player.
+      var PITCH = 4 * 60 + 10; // 4:10 = 250s de vídeo
+      var KEY = 'al_up01_revealed_v3', iv = null, t0 = Date.now(), saw = false;
       function reveal() { document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} if (iv) { clearInterval(iv); iv = null; } }
       function vtime() { try { var a = (window.smartplayer && window.smartplayer.instances) || []; for (var i = 0; i < a.length; i++) { var t = a[i] && a[i].instance && a[i].instance.currentTime; if (typeof t === 'number' && isFinite(t)) return t; } } catch (e) {} return -1; }
       function check() { var t = vtime(); if (t >= 0) saw = true; if (t >= PITCH) return reveal(); if (!saw && Date.now() - t0 > 30000) reveal(); }

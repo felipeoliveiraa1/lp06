@@ -12,19 +12,19 @@ const PAYT = 'https://checkout.payt.com.br/multiple-oneclickbuyscript/LXGYD5.js'
     <div class="funnel-wrap">
       <p class="funnel-kicker">🛡️ ACESSO PRIORITÁRIO</p>
       <h1 class="funnel-title">PRIORITY <span class="green">PASS</span></h1>
-      <Vsl playerId="vid-6a3d295be172d6fc8662d0fc" poster="/assets/poster-priority-pass-2.webp" />
+      <Vsl playerId="vid-6a3d21054566297557476fca" poster="/assets/poster-priority-pass-2.webp" />
       <div class="gate" id="up02-cta">
-        <PaytButton object="4EVO5L-LXG5X5" label="QUERO CONFIGURAR AINDA HOJE." />
+        <PaytButton object="L88BPL-LXG5X5" label="QUERO ADQUIRIR O PRIORITYPASS" installments />
         <a class="decline" href="/priority-pass-downsell/">NÃO QUERO ESSA OFERTA</a>
       </div>
     </div>
   </main>
   <script is:inline src={PAYT}></script>
-  <!-- reveal: CTA aparece quando o VÍDEO chega em 0:43 (currentTime real do player vturb).
+  <!-- reveal: CTA aparece quando o VÍDEO chega em 0:45 (currentTime real do player vturb).
        ?preview revela na hora (QA). Persiste. Fail-open se o player não carregar (adblock). -->
   <script is:inline>
     (function () {
-      var PITCH = 43; // 0:43 = 43s de vídeo
+      var PITCH = 45; // 0:45 = 45s de vídeo
       var KEY = 'al_up02_revealed', iv = null, t0 = Date.now(), saw = false;
       function reveal() { document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} if (iv) { clearInterval(iv); iv = null; } }
       function vtime() { try { var a = (window.smartplayer && window.smartplayer.instances) || []; for (var i = 0; i < a.length; i++) { var t = a[i] && a[i].instance && a[i].instance.currentTime; if (typeof t === 'number' && isFinite(t)) return t; } } catch (e) {} return -1; }

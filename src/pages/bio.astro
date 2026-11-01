@@ -1,0 +1,356 @@
+---
+// BIO — LP completa, SEM gate (os 15 blocos e os 3 botoes aparecem desde o primeiro
+// segundo) e SEM teste A/B: VSL unica e checkout unico.
+//   VSL ....: vid-6abea137 (midia 6aac61e3 "VSL PADRAO 297", 24:43) — headline em
+//             imagem pelo vturb, por isso o slot usa .vsl-slot--flex
+//   checkout: c938339a (R$297 — 1x R$267,30 com 10% no cartao, 12x R$27,64)
+// Nao e mais copia fiel da raiz: a raiz roda o A/B (ab-6aac64bb) com checkout de R$397.
+import Base from '../layouts/Base.astro';
+
+const CHECKOUT = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // R$297
+const A = '/assets/';
+const img = {
+  heroBg: A + 'hero-bg.webp',
+  bgS2: A + '47cd5dd7a6ee45da_bg-s2_resultado12.webp',
+  at: [
+    A + '1fbcc6fe5a8dd418_IMG-AT-1_resultado1.webp',
+    A + '036ac490246605f6_IMG-AT-2_resultado1-300x169.webp',
+    A + '1c147d119736ff85_IMG-AT-3_resultado1.webp',
+    A + 'eb2d974dbd294bee_IMG-AT-4_resultado1-300x169.webp',
+    A + '890fd3dff2bdf27a_IMG-AT-5_resultado1.webp',
+    A + 'a6e4f4e572106f5e_IMG-AT-5-1_resultado1.webp',
+    A + '40d52b57d7921fa7_IMG-AT-7_resultado1-300x169.webp',
+    A + '1a4e3196f7247c55_IMG-AT-8_resultado1.webp',
+  ],
+  antes: A + '112156a4bd4c5669_ANTES-BG_resultado1-1-1.webp',
+  automacao: A + 'wpup_2026-05-AUTOMACAO-LUCRATIVA-MOCKUP-SECION-v2-1_resultado1-1.webp',
+  dep: [
+    A + '53d526227aed9a01_DEP-1-AL_resultado1-1.webp',
+    A + '0258b4ce40b51cdc_DEP-02-AL_resultado1-1.webp',
+    A + '0fffacfef12b5f38_DEP-03-AL_resultado1-1.webp',
+    A + '4ed4dfc504126b06_DEP-04-AL_resultado1-1.webp',
+    A + '9e984b13ccf4280e_DEP-05-AL_resultado1-1.webp',
+    A + '078940ac6a9fbbe3_DEP-06-AL_resultado1-1.webp',
+  ],
+  passo: [
+    A + '1b1a0a5b466ef79e_PASSO-1_resultado1-1-300x170.webp',
+    A + '14a406f60d35800b_PASSO-2_resultado1.webp',
+    A + '2d9cb35cf3022716_PASSO-3_resultado1-300x170.webp',
+    A + 'passo4.webp',
+  ],
+  pqe: [
+    A + '444a0a2a3b520b2d_PQE-1_resultado12-768x391.webp',
+    A + '4d46614482b447c8_PQE-2_resultado12-300x150.webp',
+    A + '05ee26ab29310d4b_PQE-3_resultado12-768x391.webp',
+  ],
+  mockupOferta: A + '26ab166ffccc3f53_MOCKUP-OFERTA-AL-1-1.webp',
+  selos: A + '898832b786512f24_SELOS-CHECKOUT.svg',
+  garantia: A + '1d346509bbd077a2_garantia-7d-2-1.webp',
+  autorBg: A + 'bio-bg.webp',
+  autorBgMob: A + 'bio-mob.webp',
+  garantiaBg: A + 'wpup_2026-01-bg-garantia.webp',
+  alBg: A + 'wpup_2026-01-AL-BG_resultado1.webp',
+  cursosBg: A + 'wpup_2026-05-OUTROS-BG1-1.webp',
+};
+// Dores: cada uma é um CARD (imagem em cima + texto embaixo), igual ao original
+const pains = [
+  { i: img.at[0], t: 'Está exausto de trabalhar o dia inteiro enquanto o dinheiro nunca sobra no fim do mês.' },
+  { i: img.at[1], t: 'Já percebeu que está trocando tempo da sua vida por um salário que NUNCA mudará sua realidade.' },
+  { i: img.at[2], t: 'Não aguenta mais enriquecer os outros enquanto você fica no mesmo lugar.' },
+  { i: img.at[3], t: 'Está de saco cheio das pessoas rindo da sua cara quando você diz que vai mudar de vida.' },
+  { i: img.at[4], t: 'Precisa dizer “agora não” para seus filhos mais vezes do que gostaria.' },
+  { i: img.at[5], t: 'Vive sempre apagando incêndios, sem tempo para construir o futuro.' },
+  { i: img.at[6], t: 'Trabalha duro, mas ganha pouco.' },
+  { i: img.at[7], t: 'Todos os meses está no cheque especial.' },
+];
+const bonus = [
+  { n: 1, t: 'Aplicativo Interativo Da Automação Lucrativa', p: 'R$97', d: 'Sabe aquela história de “precisar de notebook para começar”? Esquece essa baboseira! Agora você ativa, controla e acompanha a Automação Lucrativa direto do seu celular com um clique.', img: A + 'wpup_2026-05-BONUS-1-DESKTOP_resultado12.webp', imgMob: A + 'wpup_2026-05-BONUS-1-MOB_resultado12.webp' },
+  { n: 2, t: 'Suporte Individual e Personalizado', p: 'R$247', d: 'Você não vai ficar na mão! Tanto no WhatsApp quanto dentro da Automação você terá um suporte individual para tirar todas as suas dúvidas.', img: A + 'wpup_2026-05-BONUS-2-DESKTOP_resultado12.webp', imgMob: A + 'wpup_2026-05-BONUS-2-MOB_resultado12.webp' },
+  { n: 3, t: 'O Manual Das Mesas Proprietárias', p: 'R$197', d: 'Você vai aprender todos os meus atalhos para encontrar as mesas proprietárias que disponibilizam capital para você operar.', img: A + 'wpup_2026-05-BONUS-3-DESKTOP_resultado12.webp', imgMob: A + 'wpup_2026-05-BONUS-3-MOB_resultado12.webp' },
+  { n: 4, t: 'O Guia Para Declaração De Lucros', p: 'R$97', d: 'O passo a passo para declarar seus lucros em dólar de forma simples e 100% dentro da lei.', img: A + 'wpup_2026-05-BONUS-4-DESKTOP_resultado12.webp', imgMob: A + 'wpup_2026-05-BONUS-4-MOB_resultado12.webp' },
+  { n: 5, t: 'Aula De Alocação De Lucros', p: 'R$97', d: 'Uma estratégia simples, segura e eficaz que poucos brasileiros conhecem para alocar os lucros e multiplicar seu patrimônio em até 7 vezes.', img: A + 'wpup_2026-05-BONUS-5-DESKTOP_resultado12.webp', imgMob: A + 'wpup_2026-05-BONUS-5-MOB_resultado12-1.webp' },
+  { n: 6, t: 'Sociedade Lucrativa', p: 'R$197', d: 'Acesso à comunidade de homens que querem alcançar resultados acima da média e trocar experiências.', img: A + 'wpup_2026-05-BONUS-6-DESKTOP_resultado12.webp', imgMob: A + 'wpup_2026-05-BONUS-6-MOB_resultado12.webp' },
+];
+const steps = [
+  { n: 'PASSO 1', t: 'Configurar a Automação Lucrativa', d: 'Primeiro, vamos configurar a sua automação, passo a passo, para que você possa lucrar sem complicação.' },
+  { n: 'PASSO 2', t: 'Conexão: Automação ↔ Mesas proprietárias', d: 'Conectamos a sua automação às mesas proprietárias que fornecem o capital para operar.' },
+  { n: 'PASSO 3', t: 'Apertar um único botão', d: 'Agora você ativa a automação com apenas um clique e simplesmente espera que ela gere os resultados. Pode tomar a sua gelada e esperar o dinheiro cair na conta.' },
+  { n: 'PASSO 4', t: 'Receber os primeiros resultados', d: 'Depois de alguns minutos ativada, a automação estará trabalhando a todo vapor, e seus primeiros resultados começam a aparecer.' },
+];
+const quem = [
+  { img: img.pqe[0], t: 'Para quem trabalha como CLT e deseja ganhar dinheiro em dólar, sem falar inglês ou aparecer.' },
+  { img: img.pqe[1], t: 'Para quem já empreende e quer receber 6X mais de forma rápida e segura.' },
+  { img: img.pqe[2], t: 'Para quem está desempregado e busca uma forma de fazer renda pela internet, sem precisar investir.' },
+];
+const offerList = [
+  ['Acesso Imediato A Automação Lucrativa', 'R$297'],
+  ['Bônus 1: Aplicativo Da Automação Lucrativa', 'R$97'],
+  ['Bônus 2: Suporte Individual e Personalizado', 'R$247'],
+  ['Hotseat semanal (mentoria recorrente)', 'R$1497'],
+  ['Bônus 3: O Manual Das Mesas Proprietárias', 'R$197'],
+  ['Bônus 4: O Guia Para Declaração De Lucros', 'R$97'],
+  ['Bônus 5: Aula De Alocação De Lucros', 'R$97'],
+  ['Bônus 6: Sociedade Lucrativa', 'R$197'],
+  ['Bônus 7: Bônus Secreto', 'R$700'],
+  ['Garantia Incondicional de 7 dias', 'Inestimável'],
+];
+const faq = [
+  ['O que exatamente eu vou receber?', 'Você terá acesso a instruções práticas com o passo a passo detalhado para ativar a automação rapidamente, sem chance de erro. O acesso será de 1 ano, e você poderá usar a automação 24 horas por dia, 7 dias por semana, com suporte diário diretamente comigo e com a minha equipe.'],
+  ['Como recebo o acesso?', 'Assim que confirmar o seu pagamento, enviaremos um email automático à sua caixa de entrada com o link e as instruções de acesso.'],
+  ['É seguro?', 'Sim! Tanto seu pagamento quanto todos os seus dados são 100% seguros, criptografados e processados pela Kirvano, uma das maiores empresas de tecnologia da América Latina. Além disso, você conta com uma garantia incondicional de 7 dias.'],
+  ['É pagamento único ou recorrente?', 'NÃO é recorrente. O pagamento é único por todo o conteúdo e os bônus oferecidos.'],
+  ['Quais as formas de pagamento?', 'Cartão de crédito à vista ou parcelado em até 12x e PIX, tudo com garantia de proteção de 100% dos seus dados.'],
+];
+---
+<Base noindex title="Comece aqui – A Sociedade Trader">
+  <!-- gate: esconde botão da hero + tudo abaixo até o vídeo chegar em 18:03 (linha do tempo).
+       Roda antes da pintura (sem flash). Sem JS / com ?preview, nada é escondido. -->
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" style={`background-image:url(${img.heroBg})`}>
+    <div class="wrap--narrow">
+      <h1 class="hero-title hl-page">
+        O <u class="ul">Passo a Passo</u> Que Brasileiros Comuns Estão Usando Pra
+        <span class="green">Lucrar R$550 Por Dia</span> No Mercado Mais Lucrativo Do Mundo
+      </h1>
+      <p class="hero-sub hl-page">Nada de investir, <strong>nada de aparecer e nada de day trade!</strong></p>
+
+      <!-- ===== VSL — player nativo do vturb (carrega no load = play-rate real) ===== -->
+      <div class="vsl-slot vsl-slot--flex" id="vsl">
+        <vturb-smartplayer id="vid-6abea13778da91d4564c0da8" style="display:block;width:100%">
+          <div class="vturb-player-placeholder" style="position:relative;width:100%;padding:177.78% 0 0;background:#05140b"></div>
+        </vturb-smartplayer>
+      </div>
+      <script is:inline>
+        /* adia o player p/ logo após o 1º paint (fora da janela do LCP): no máx 2s (requestIdleCallback)
+           ou na 1ª interação. Ainda carrega p/ todos que ficam >~1s = play-rate real preservado. */
+        (function(){var SRC='https://scripts.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/players/6abea13778da91d4564c0da8/v4/player.js',done=false;function load(){if(done)return;done=true;var s=document.createElement('script');s.src=SRC;s.async=true;document.head.appendChild(s);}if('requestIdleCallback' in window){requestIdleCallback(load,{timeout:2000});}else{setTimeout(load,1500);}['pointerdown','touchstart','scroll','keydown'].forEach(function(e){addEventListener(e,load,{once:true,passive:true});});})();
+      </script>
+
+      <div class="gate" id="hero-cta">
+        <p class="cupom mt-m">CUPOM LIBERADO</p>
+        <div class="cta-wrap"><a class="btn" data-ck href={CHECKOUT}>QUERO TER ACESSO AGORA</a></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- tudo abaixo da hero fica escondido até o reveal (13:55 após o play) -->
+  <div class="gate" id="below">
+  <!-- ============ ATÉ QUANDO? (celular Nubank + cards de dor) ============ -->
+  <section class="quando">
+    <div class="quando-inner" style={`background-image:url(${img.bgS2})`}>
+      <div class="wrap center">
+        <h2 class="wrap--narrow" style="margin-inline:auto;font-family:var(--font-head);font-weight:600;line-height:1.2;font-size:clamp(18px,2.5vw,28px)">ATÉ QUANDO VOCÊ VAI VENDER SUA HORA PARA <span class="red">RECEBER UM SALÁRIO QUE MAL PAGA SUAS CONTAS?</span></h2>
+        <p class="wrap--narrow" style="margin:12px auto 0;color:var(--gray);font-size:clamp(14px,1.7vw,16px)">Se você está cansado de ver todo mundo ao seu redor avançando enquanto a sua vida parece estagnada, como se você estivesse preso em um ciclo que nunca acaba, então você provavelmente…</p>
+        <div class="pain-cards">
+          {pains.map((p) => (
+            <figure>
+              <img src={p.i} alt="" loading="lazy" decoding="async" />
+              <figcaption>{p.t}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="section">
+    <div class="wrap--narrow center stack">
+      <img src={img.antes} alt="Antes e depois" loading="lazy" style="border-radius:14px" />
+      <h2 class="h2 mt-m">EU JÁ ESTIVE NESSE LUGAR!</h2>
+      <p class="lead">Então, lá vai uma história rápida de como um ex-motoboy quebrado se tornou uma das cinco maiores autoridades do mercado forex no Brasil.</p>
+      <p class="muted">Tentei cripto, opções binárias, Shopee, dropshipping… E adivinha? Nada funcionou.</p>
+      <p class="muted">Foi então que eu segui o princípio que todo homem deveria saber: trabalhe em silêncio, suma e deixe o resultado fazer o barulho. E dentre todas as formas de ganhar dinheiro que encontrei nesse “modo caverna”, sem dúvida a melhor foi uma só.</p>
+      <p class="lead">Eu não precisava investir, não precisava aparecer e o melhor: eu podia receber <strong class="green">EM DÓLAR</strong> todos os dias. Em pouco tempo, saí de alguém que vivia sempre no cheque especial para alguém que passou a viver com tranquilidade. Isso aconteceu por causa de uma coisa chamada:</p>
+    </div>
+  </section>
+
+  <!-- ============ AUTOMAÇÃO LUCRATIVA (3 celulares no topo) ============ -->
+  <section class="section center glow-top">
+    <div class="wrap">
+      <img src={img.automacao} alt="Automação Lucrativa — app de trades" loading="lazy" style="width:100%;max-width:1100px;margin:0 auto" />
+      <h2 class="h1 mt-m">AUTOMAÇÃO <span class="grad">LUCRATIVA</span></h2>
+      <div class="wrap--narrow stack mt-m">
+        <p class="lead">Uma inteligência artificial feita com tecnologia asiática, capaz de gerar de 83 a 130 dólares por dia no mercado forex, sem que você precise investir, estudar gráficos ou aparecer na internet.</p>
+        <p><strong class="muted">O lema é:</strong> <strong class="green">primeiro você ganha, depois, se quiser, você aprende.</strong></p>
+        <p class="muted">É literalmente uma máquina de imprimir dinheiro que você carrega no bolso e que lucra 24 horas por dia, fazendo todo o trabalho duro no seu lugar — mesmo que você nunca tenha operado no mercado financeiro e não fale nada de inglês.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DEPOIMENTOS ============ -->
+  <section class="section">
+    <div class="wrap">
+      <h2 class="h2 center wrap--narrow">VEJA O QUE PESSOAS COMUNS COMO VOCÊ ESTÃO FALANDO DA AUTOMAÇÃO LUCRATIVA:</h2>
+      <div class="scroller mt-l">
+        {img.dep.map((s, i) => <img src={s} alt={`Print de resultado ${i + 1}`} loading="lazy" />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARAÇÃO ============ -->
+  <section class="section center">
+    <div class="wrap">
+      <h2 class="h2 wrap--narrow">A AUTOMAÇÃO LUCRATIVA É DIFERENTE DE TUDO O QUE VOCÊ JÁ VIU!</h2>
+      <div class="compare">
+        <div class="col col--bad" style={`background-image:url(${img.cursosBg})`}>
+          <h3 class="red">Cursos de renda extra, apostas, robô do pix e etc…</h3>
+          <ul class="ck xk">
+            <li>Quem ensina nunca mostra o próprio rosto.</li>
+            <li>Prometem ganhos fraudulentos e imaginários.</li>
+            <li>Depoimentos falsos e comprados.</li>
+            <li>Exigem muito do seu tempo.</li>
+            <li>Não te dão garantia, nem segurança de verdade.</li>
+            <li>Cheios de reclamações e reembolsos.</li>
+          </ul>
+        </div>
+        <div class="col col--good" style={`background-image:url(${img.alBg})`}>
+          <h3 class="green">Automação Lucrativa</h3>
+          <ul class="ck">
+            <li>Seu mentor foi um dos primeiros a bater 2 milhões de lucros, documentando os resultados.</li>
+            <li>Ganhos comprovados em dólar, que te protegem das crises econômicas.</li>
+            <li>Te permite ter um poder de compra 6 vezes maior do que 99% das pessoas.</li>
+            <li>+1.000 alunos e transformações REAIS.</li>
+            <li>Você tem uma garantia incondicional.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COM A AL VOCÊ TERÁ (mockup notebook = fundo full / checks à direita) ============ -->
+  <section class="coma" style={`background-image:url(${A}coma-bg.webp)`}>
+    <div class="coma-content">
+      <p class="h-kicker">Em outras palavras…</p>
+      <h2 class="h2">COM A <span class="green">AUTOMAÇÃO LUCRATIVA VOCÊ TERÁ</span></h2>
+      <ul class="ck-big">
+        <li>A Ferramenta Que Me Fez Faturar Mais De 2 Milhões Nos Últimos 2 Anos</li>
+        <li>O Passo A Passo Prático Para Você Começar Imediatamente Usando O Celular</li>
+        <li>A Forma Menos Trabalhosa Para Ganhar De 85 A 120 Dólares Todos Os Dias Na Internet</li>
+        <li>Instruções Gravadas e Online Para Assistir Onde e Quando Quiser</li>
+        <li>Uma Equipe De Suporte À Sua Disposição Para Sanar Dúvidas A Qualquer Momento</li>
+        <li>Contato Com Mais de Mil Alunos Para Trocar Experiências E Acelerar Seus Resultados.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PASSOS ============ -->
+  <section class="section center">
+    <div class="wrap">
+      <h2 class="h2 wrap--narrow">SIMPLIFICANDO, SEUS RESULTADOS VIRÃO DE APENAS 4 PASSOS:</h2>
+      <div class="steps">
+        {steps.map((st, i) => (
+          <div class="step">
+            <img src={img.passo[i]} alt={st.t} loading="lazy" />
+            <div class="body">
+              <p class="num">{st.n}</p>
+              <h3 class="h3" style="font-size:20px;margin:6px 0 8px">{st.t}</h3>
+              <p class="muted" style="font-size:15px">{st.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARA QUEM ============ -->
+  <section class="section center">
+    <div class="wrap">
+      <p class="h-kicker">Até aqui tudo fez sentido, mas…</p>
+      <h2 class="h2">PARA QUEM A AUTOMAÇÃO LUCRATIVA REALMENTE É?</h2>
+      <div class="cards3">
+        {quem.map((q) => (
+          <figure>
+            <img src={q.img} alt="" loading="lazy" />
+            <figcaption>{q.t}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BÔNUS ============ -->
+  <section class="section">
+    <div class="wrap bonus">
+      {bonus.map((b) => (
+        <div class="bonus__card" style={`--bgd:url(${b.img});--bgm:url(${b.imgMob})`}>
+          <div class="txt">
+            <p class="tag">Bônus {b.n}:</p>
+            <h3>{b.t}</h3>
+            <p class="muted" style="font-size:15px">{b.d}</p>
+            <p class="price">{b.p}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ OFERTA ============ -->
+  <section class="section" style="background:#000">
+    <div class="offer">
+      <img class="offer__mockup" src={img.mockupOferta} alt="Tudo que você recebe na Automação Lucrativa" loading="lazy" />
+      <h2 class="offer__title">GARANTINDO A AUTOMAÇÃO LUCRATIVA HOJE VOCÊ VAI RECEBER:</h2>
+      <ul class="offer__list">
+        {offerList.map((o) => <li>{o[0]} <span class="arrow">→</span> {o[1]}</li>)}
+      </ul>
+      <p class="offer__total">Total real: <span class="offer__strike">R$1.929</span></p>
+      <p class="offer__price">12X R$ 27,64<small>ou 297 à vista!</small></p>
+      <a class="btn" data-ck href={CHECKOUT}>QUERO TER ACESSO AGORA</a>
+      <img src={img.selos} alt="Formas de pagamento seguras" class="offer__seal" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- ============ AUTOR (Matheus = fundo esquerda / texto direita) ============ -->
+  <section class="bio" style={`--biod:url(${img.autorBg});--biom:url(${img.autorBgMob})`}>
+    <div class="bio-content">
+      <h2 class="bio-name"><span class="bio-grad">MATHEUS</span><br />OLIVEIRA</h2>
+      <p class="bio-lead">É empresário, especialista no mercado forex e criador da Automação Lucrativa.</p>
+      <p>Como a grande maioria, já fez de tudo, ganhou pouco e viveu por muitos anos completamente estagnado.</p>
+      <p>Depois de anos testando promessas vazias, ele encontrou no Forex uma forma legítima de ganhar em dólar, sem depender de sorte, exposição ou conhecimento técnico.</p>
+      <p>Hoje, Matheus estruturou um sistema de automação com inteligência artificial, capaz de operar em mesas proprietárias e gerar até 4 mil dólares por mês no mercado mais lucrativo do mundo.</p>
+      <p>A Sociedade do Trader nasceu para reunir homens que querem alcançar resultados acima da média e usar a Automação Lucrativa para construir uma vida financeira sólida, com liberdade de tempo e geográfica.</p>
+    </div>
+  </section>
+
+  <!-- ============ GARANTIA ============ -->
+  <section class="section center has-bg glow-top" style={`background-image:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.85)),url(${img.garantiaBg})`}>
+    <div class="guarantee">
+      <img src={img.garantia} alt="Garantia de 7 dias" loading="lazy" />
+      <div>
+        <h2 class="h2">TESTE POR 7 DIAS GRÁTIS E SEM COMPROMISSO!</h2>
+        <p class="lead mt-s">Você pode testar a Automação Lucrativa por 7 dias sem pagar nada. Se você não obter resultados ou achar que não faz sentido logo nos primeiros 7 dias, devolvemos 100% do seu investimento. Sem perguntas, sem burocracia e sem enrolação.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section">
+    <div class="wrap--narrow center">
+      <p class="h-kicker">// Tire suas dúvidas</p>
+      <h2 class="h2">Perguntas Frequentes</h2>
+    </div>
+    <div class="faq">
+      {faq.map((f) => (
+        <details>
+          <summary>{f[0]}</summary>
+          <div class="ans">{f[1]}</div>
+        </details>
+      ))}
+    </div>
+    <div class="cta-wrap"><a class="btn" data-ck href={CHECKOUT}>QUERO TER ACESSO AGORA</a></div>
+  </section>
+
+  </div><!-- /#below -->
+
+  <footer class="foot">
+    <p>A Sociedade Trader · Automação Lucrativa</p>
+    <p style="margin-top:8px">Este produto não garante a obtenção de resultados. Qualquer referência ao desempenho de uma estratégia não deve ser interpretada como garantia de ganhos.</p>
+    <p style="margin-top:8px">Operar mercados alavancados envolve risco real de perda.</p>
+    <p style="margin-top:8px">MATCHUP TREINAMENTOS LTDA - ME - CNPJ 43.108.423/0001-32</p>
+    <p style="margin-top:8px"><a href="/policy" style="color:inherit;text-decoration:underline;text-underline-offset:2px">Política de Privacidade</a></p>
+  </footer>
+
+  <!-- Sem script de gate/AB aqui: a pagina ja nasce aberta e tem checkout unico.
+       O href dos CTAs vem do CHECKOUT la de cima, direto do HTML. -->
+</Base>

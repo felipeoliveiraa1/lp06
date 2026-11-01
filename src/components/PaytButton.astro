@@ -1,9 +1,26 @@
 ---
 // Botão one-click do Payt. O script multiple-oneclickbuyscript varre a página por
 // elementos com payt_action="oneclick_buy" e cobra o produto do data-object; o
-// <select payt_element="installment"> oculto é onde ele injeta as parcelas.
-// IMPORTANTE: incluir o <script src=...LXGYD5.js> UMA vez por página (no .astro).
-const { object, label } = Astro.props;
+// <select payt_element="installment"> é onde ele injeta as parcelas.
+//
+// installments -> mostra o select de parcelas (comprador escolhe no cartão).
+// O select fica VISÍVEL desde o início, exatamente como o snippet oficial da Payt.
+// Já tentamos revelá-lo só depois de popular (polling de 24s): quando a Payt demorava
+// mais que isso, o select nunca aparecia e o comprador ia no à vista sem escolher.
+// Efeito colateral aceito: abrindo a URL direto, fora do fluxo de compra, a Payt aborta
+// ("parametro _o inexistente na url") e o select fica vazio (o iOS mostra "Sem Opções").
+// Isso só acontece em teste manual — quem vem do checkout traz _o e _m. No PIX é sempre
+// 1x e o script ignora o select.
+//
+// IMPORTANTE: incluir o <script src=...LJAMP7.js> UMA vez por página (no .astro).
+const { object, label, installments = false } = Astro.props;
 ---
 <a class="accept-btn" data-object={object} href="#" payt_action="oneclick_buy">{label}</a>
-<select data-object={object} payt_element="installment" style="display:none"></select>
+<select
+  data-object={object}
+  payt_element="installment"
+  class={installments ? 'payt-installment' : undefined}
+  style={installments
+    ? 'display:block;margin:10px auto 0;width:100%;max-width:240px;padding:10px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;font-size:14px'
+    : 'display:none'}
+></select>

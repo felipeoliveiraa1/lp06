@@ -112,7 +112,22 @@ a{color:inherit;text-decoration:none}
 .vsl__cta:hover .vsl__cta-box{animation-play-state:paused;transform:translateZ(0) scale(1.05)}
 @keyframes vslPulse{0%,100%{transform:translateZ(0) scale(1)}50%{transform:translateZ(0) scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.vsl__cta-box{animation:none;transform:translateZ(0) scale(1)}}
-.vsl-slot vturb-smartplayer{display:block;width:100%;height:100%}
+/* poster estático (miniatura da VSL) = LCP rápido; o player cobre por cima ao carregar */
+.vsl-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0;pointer-events:none}
+.vsl-slot vturb-smartplayer{display:block;width:100%;height:100%;position:relative;z-index:1}
+/* Slot FLEXIVEL: usado nas paginas onde o vturb pode renderizar a headline DENTRO
+   do player. O espaco do video e reservado pelo .vturb-player-placeholder (padding
+   177.78%) que fica dentro do <vturb-smartplayer> — entao nao travamos aspect-ratio
+   aqui e o player pode crescer p/ caber a headline sem cortar.
+   (O shadow root do vturb e CLOSED: nao da p/ inspecionar por dentro.) */
+.vsl-slot--flex{aspect-ratio:auto}
+.vsl-slot--flex vturb-smartplayer{height:auto}
+/* A headline/sub desta pagina vem do VTURB (imagem, dentro do player). As da pagina
+   ficam ocultas de forma fixa — sem deteccao e sem troca na tela.
+   Rede de seguranca: se o player nao carregar (adblock/erro), .vturb-falhou reexibe
+   as da pagina p/ a dobra nunca ficar sem headline. */
+.hl-page{display:none}
+html.vturb-falhou .hl-page{display:block}
 
 /* "até quando?" — bg-s2 already contains the Nubank phone + faded red text */
 .quando{padding:20px clamp(10px,2.5vw,26px)}
@@ -350,7 +365,7 @@ a{color:inherit;text-decoration:none}
 /* VSL no funil */
 .funnel .vsl-slot{margin:24px auto 0}
 /* botão de aceite (one-click Payt) — verde, pulso suave (só transform) */
-.accept-btn{display:block;width:100%;max-width:440px;margin:26px auto 0;
+.accept-btn{display:block;width:100%;max-width:440px;margin:26px auto 0;border:0;cursor:pointer;
   background:#22c55e;color:#fff;font-family:var(--font-head);font-weight:700;
   font-size:clamp(15px,4.2vw,19px);line-height:1.25;padding:17px 22px;border-radius:32px;
   text-decoration:none;box-shadow:0 10px 30px rgba(34,197,94,.32);
@@ -358,7 +373,7 @@ a{color:inherit;text-decoration:none}
 .accept-btn:hover{animation-play-state:paused;transform:translateZ(0) scale(1.03)}
 @keyframes acPulse{0%,100%{transform:translateZ(0) scale(1)}50%{transform:translateZ(0) scale(1.04)}}
 /* botão de recusa — vermelho preenchido (menos destaque que o verde de aceite) */
-.decline{display:block;width:100%;max-width:420px;margin:16px auto 0;
+.decline{display:block;width:100%;max-width:420px;margin:16px auto 0;border:0;cursor:pointer;
   background:#e11d2a;color:#fff;font-family:var(--font-head);font-weight:700;
   font-size:clamp(14px,3.6vw,16px);line-height:1.25;padding:13px 20px;border-radius:32px;
   text-align:center;text-decoration:none;box-shadow:0 8px 24px rgba(225,29,42,.28)}

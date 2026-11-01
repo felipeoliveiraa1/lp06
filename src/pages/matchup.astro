@@ -1,0 +1,339 @@
+---
+// MATCHUP TREINAMENTOS LTDA - ME — página institucional (100% self-contained: head +
+// estilos próprios; NÃO usa o layout/CSS/tracking da LP de trading). Zero requests externos.
+// Duplicata da /ourico adaptada p/ a empresa BR (PT), mesmo posicionamento tec/software.
+const PHOTO = '/assets/matchup-matheus.webp';
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MATCHUP Treinamentos LTDA — Engenharia de Software, Automação & IA</title>
+  <meta name="description" content="MATCHUP TREINAMENTOS LTDA - ME — desenvolvimento de software, automação de processos e integrações de inteligência artificial em escala. Sistemas robustos, seguros e escaláveis." />
+  <meta name="robots" content="index,follow" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MATCHUP Treinamentos LTDA — Engenharia de Software, Automação & IA" />
+  <meta property="og:description" content="Software robusto, automação inteligente e IA em escala." />
+  <meta property="og:image" content={PHOTO} />
+
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/InstrumentSans-700.woff2" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/InstrumentSans-600.woff2" />
+
+  <style is:inline>
+    @font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url('/assets/InstrumentSans-400.woff2') format('woff2')}
+    @font-face{font-family:'Instrument Sans';font-style:normal;font-weight:500;font-display:swap;src:url('/assets/InstrumentSans-500.woff2') format('woff2')}
+    @font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url('/assets/InstrumentSans-600.woff2') format('woff2')}
+    @font-face{font-family:'Instrument Sans';font-style:normal;font-weight:700;font-display:swap;src:url('/assets/InstrumentSans-700.woff2') format('woff2')}
+
+    :root{
+      --bg:#05080f; --bg2:#0a0f1b;
+      --panel:rgba(255,255,255,.028); --panel-2:rgba(255,255,255,.045);
+      --border:rgba(255,255,255,.09); --border-2:rgba(255,255,255,.14);
+      --text:#e9eef6; --muted:#94a2ba; --muted-2:#6b7a92;
+      --c1:#22d3ee; --c2:#3b82f6; --c3:#a855f7;
+      --grad:linear-gradient(120deg,#22d3ee 0%,#3b82f6 48%,#a855f7 100%);
+      --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+      --mono:ui-monospace,'SF Mono','JetBrains Mono','Fira Code',Menlo,monospace;
+      --maxw:1120px; --r:18px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:40px}
+    body{
+      background:var(--bg); color:var(--text); font-family:var(--sans);
+      font-size:17px; line-height:1.65; overflow-x:hidden;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+      position:relative;
+    }
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+
+    /* ---- fundo: aurora + grid (compositado, atrás de tudo) ---- */
+    .bgfx{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;background:
+      radial-gradient(1200px 700px at 78% -8%, rgba(59,130,246,.18), transparent 60%),
+      radial-gradient(1000px 700px at 8% 4%, rgba(168,85,247,.14), transparent 58%),
+      var(--bg)}
+    .bgfx::before,.bgfx::after{content:'';position:absolute;width:52vw;height:52vw;max-width:720px;max-height:720px;
+      border-radius:50%;filter:blur(90px);opacity:.5;will-change:transform}
+    .bgfx::before{top:-12%;right:-8%;background:radial-gradient(circle,rgba(34,211,238,.55),transparent 68%);animation:drift1 22s ease-in-out infinite}
+    .bgfx::after{bottom:-16%;left:-10%;background:radial-gradient(circle,rgba(168,85,247,.5),transparent 68%);animation:drift2 26s ease-in-out infinite}
+    .grid{position:fixed;inset:0;z-index:-1;pointer-events:none;
+      background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+      background-size:64px 64px;
+      -webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000 35%,transparent 78%);
+              mask-image:radial-gradient(120% 90% at 50% 0%,#000 35%,transparent 78%)}
+    @keyframes drift1{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-6%,7%,0) scale(1.12)}}
+    @keyframes drift2{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(7%,-6%,0) scale(1.15)}}
+
+    .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+    .section{padding:clamp(64px,10vw,120px) 0}
+    .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+    .label{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+    .center{text-align:center}
+
+    /* ---- topbar ---- */
+    .topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      background:rgba(5,8,15,.6);border-bottom:1px solid var(--border)}
+    .topbar-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+    .brand{font-weight:700;letter-spacing:.02em;font-size:16px}
+    .brand b{font-weight:700}
+    .brand .llc{font-family:var(--mono);font-size:11px;color:var(--muted-2);letter-spacing:.18em;margin-left:8px}
+    .top-cta{font-size:14px;font-weight:600;padding:9px 16px;border-radius:999px;border:1px solid var(--border-2);color:var(--text);transition:.2s}
+    .top-cta:hover{border-color:transparent;background:var(--grad);color:#04070d}
+
+    /* ---- hero ---- */
+    .hero{padding:clamp(74px,13vw,150px) 0 clamp(40px,6vw,64px);text-align:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;letter-spacing:.16em;
+      text-transform:uppercase;color:var(--muted);padding:7px 15px;border:1px solid var(--border);border-radius:999px;background:var(--panel)}
+    .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--c1);box-shadow:0 0 12px 2px rgba(34,211,238,.8);animation:pulse 2.4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.82)}}
+    .hero-title{font-weight:700;letter-spacing:-.02em;line-height:1.06;margin:26px auto 0;max-width:15ch;
+      font-size:clamp(38px,8vw,74px)}
+    .hero-sub{color:var(--muted);font-size:clamp(16px,2.3vw,20px);max-width:60ch;margin:22px auto 0;line-height:1.6}
+    .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:9px;font-weight:600;font-size:16px;padding:15px 26px;border-radius:14px;max-width:100%;
+      transition:transform .18s ease,box-shadow .18s ease,border-color .18s;will-change:transform}
+    .btn--primary{background:var(--grad);color:#04070d;box-shadow:0 10px 34px rgba(59,130,246,.32)}
+    .btn--primary:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(59,130,246,.45)}
+    .btn--ghost{border:1px solid var(--border-2);color:var(--text);background:var(--panel)}
+    .btn--ghost:hover{transform:translateY(-2px);border-color:var(--c2)}
+    .pills{list-style:none;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:40px auto 0;max-width:820px}
+    .pills li{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);padding:8px 14px;border:1px solid var(--border);border-radius:999px;background:var(--panel)}
+
+    /* ---- founder ---- */
+    .founder-grid{display:grid;grid-template-columns:minmax(0,360px) 1fr;gap:clamp(30px,5vw,64px);align-items:start}
+    .photo-frame{position:relative;border-radius:22px;padding:2px;background:var(--grad);box-shadow:0 30px 70px rgba(0,0,0,.5);position:sticky;top:88px}
+    .photo-frame img{border-radius:20px;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 20%;background:var(--bg2)}
+    .photo-tag{position:absolute;left:14px;bottom:14px;right:14px;display:flex;justify-content:space-between;align-items:center;
+      font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#dfe7f3;
+      background:rgba(5,8,15,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:12px;padding:9px 12px}
+    .founder-body h2{font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-.02em;line-height:1.08;margin-top:10px}
+    .founder-body .role{color:var(--c1);font-weight:600;font-size:clamp(15px,2vw,18px);margin-top:8px}
+    .founder-body .lead{color:var(--muted);font-size:clamp(16px,2vw,18.5px);margin-top:20px;line-height:1.7}
+    .founder-body .lead strong{color:var(--text);font-weight:600}
+    .bio-blocks{margin-top:34px;display:grid;gap:2px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+    .bio-block{padding:24px 24px;background:var(--panel);transition:background .2s}
+    .bio-block:hover{background:var(--panel-2)}
+    .bio-block .bl-label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--c2);display:flex;align-items:center;gap:10px}
+    .bio-block .bl-label i{font-style:normal;color:var(--muted-2)}
+    .bio-block h3{font-size:19px;font-weight:600;margin:10px 0 8px}
+    .bio-block p{color:var(--muted);font-size:15.5px;line-height:1.68}
+
+    /* ---- expertise ---- */
+    .sec-head{text-align:center;max-width:640px;margin:0 auto clamp(38px,5vw,56px)}
+    .sec-head h2{font-size:clamp(28px,5vw,44px);font-weight:700;letter-spacing:-.02em;margin-top:14px;line-height:1.12}
+    .sec-head p{color:var(--muted);margin-top:14px;font-size:clamp(15px,2vw,18px)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{position:relative;border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;background:var(--panel);
+      transition:transform .2s ease,border-color .2s,background .2s;overflow:hidden}
+    .card::after{content:'';position:absolute;inset:0;border-radius:var(--r);padding:1px;background:var(--grad);
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+      opacity:0;transition:opacity .25s}
+    .card:hover{transform:translateY(-5px);background:var(--panel-2)}
+    .card:hover::after{opacity:1}
+    .card-ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,rgba(34,211,238,.16),rgba(168,85,247,.16));border:1px solid var(--border-2);margin-bottom:18px}
+    .card-ic svg{width:23px;height:23px;stroke:#cfe6ff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+    .card h3{font-size:18.5px;font-weight:600;letter-spacing:-.01em}
+    .card p{color:var(--muted);font-size:15px;margin-top:9px;line-height:1.62}
+
+    /* ---- valores ---- */
+    .values{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(255,255,255,.015)}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;text-align:center}
+    .value .vnum{font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--muted-2)}
+    .value h3{font-size:clamp(22px,3.4vw,30px);font-weight:700;margin-top:12px}
+    .value p{color:var(--muted);font-size:15px;margin-top:10px;max-width:32ch;margin-inline:auto}
+
+    /* ---- contato ---- */
+    .contact-card{position:relative;border:1px solid var(--border-2);border-radius:26px;padding:clamp(40px,7vw,72px) clamp(18px,5vw,28px);text-align:center;overflow:hidden;
+      background:radial-gradient(120% 130% at 50% -20%,rgba(59,130,246,.18),transparent 60%),var(--panel)}
+    .contact-card h2{font-size:clamp(28px,5.4vw,50px);font-weight:700;letter-spacing:-.02em;line-height:1.1;max-width:16ch;margin:0 auto}
+    .contact-card p{color:var(--muted);font-size:clamp(15px,2vw,18px);max-width:52ch;margin:18px auto 0}
+    .legal-box{margin:32px auto 0;display:inline-block;border:1px solid var(--border-2);border-radius:16px;
+      padding:20px 28px;background:var(--panel);text-align:center}
+    .legal-box .rz{font-weight:700;font-size:clamp(16px,2.4vw,20px);letter-spacing:.01em}
+    .legal-box .cnpj{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.06em;margin-top:8px}
+
+    /* ---- footer ---- */
+    .foot{border-top:1px solid var(--border);padding:34px 0}
+    .foot-in{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .foot-brand{font-weight:700;letter-spacing:.02em}
+    .foot-meta{font-family:var(--mono);font-size:12px;color:var(--muted-2);letter-spacing:.03em}
+
+    /* ---- reveal ---- */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+
+    @media (max-width:860px){
+      .founder-grid{grid-template-columns:1fr}
+      .photo-frame{position:relative;top:0;max-width:420px;margin:0 auto}
+      .cards{grid-template-columns:1fr 1fr}
+      .values-grid{grid-template-columns:1fr;gap:34px}
+    }
+    @media (max-width:560px){
+      .cards{grid-template-columns:1fr}
+      .topbar .top-cta{display:none}
+      .foot-in{flex-direction:column;text-align:center}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{animation:none!important}
+      .reveal{opacity:1;transform:none;transition:none}
+      html{scroll-behavior:auto}
+    }
+  </style>
+</head>
+<body>
+  <div class="bgfx"></div>
+  <div class="grid"></div>
+
+  <!-- topbar -->
+  <div class="topbar">
+    <div class="wrap topbar-in">
+      <span class="brand"><b>MATCHUP</b> Treinamentos<span class="llc">LTDA</span></span>
+      <a class="top-cta" href="#contato">Fale conosco</a>
+    </div>
+  </div>
+
+  <!-- hero -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Engenharia de Software</p>
+      <h1 class="hero-title"><span class="grad">Software</span> robusto, <span class="grad">automação</span> inteligente e IA em <span class="grad">escala</span>.</h1>
+      <p class="hero-sub">A MATCHUP Treinamentos projeta e desenvolve arquiteturas de software, automação de processos e integrações de inteligência artificial para empresas que exigem segurança, performance e escalabilidade.</p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#contato">Começar um projeto</a>
+        <a class="btn btn--ghost" href="#founder">Conheça o fundador</a>
+      </div>
+      <ul class="pills">
+        <li>Arquitetura de Software</li>
+        <li>Integrações de IA</li>
+        <li>Automação de Processos</li>
+        <li>Infraestrutura</li>
+        <li>Segurança</li>
+        <li>Escalabilidade</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- founder -->
+  <section id="founder" class="section reveal">
+    <div class="wrap founder-grid">
+      <div class="photo-frame">
+        <img src={PHOTO} width="900" height="1125" alt="Matheus de Oliveira — fundador da MATCHUP Treinamentos" loading="lazy" decoding="async" />
+        <div class="photo-tag"><span>Matheus de Oliveira</span><span>Fundador</span></div>
+      </div>
+      <div class="founder-body">
+        <p class="label">Fundador &amp; Engenheiro-líder</p>
+        <h2>Matheus de Oliveira</h2>
+        <p class="role">Desenvolvedor de Software &amp; Especialista em Tecnologia</p>
+        <p class="lead">Aos 30 anos e baseado no Rio de Janeiro, Matheus é um profissional de tecnologia com sólida trajetória em desenvolvimento de sistemas e programação. Marido dedicado e pai orgulhoso, valoriza profundamente a <strong>estabilidade</strong>, a <strong>responsabilidade</strong> e a construção de um <strong>legado</strong> duradouro — a família é o pilar central das suas motivações e decisões profissionais.</p>
+
+        <div class="bio-blocks">
+          <div class="bio-block">
+            <span class="bl-label"><i>01</i> Origem &amp; Trajetória</span>
+            <h3>Das bases técnicas ao software avançado</h3>
+            <p>Sua paixão por tecnologia começou cedo e ganhou forma na formação como Técnico em Informática — uma base sólida em arquitetura de computadores, redes e lógica de programação. Ao longo dos anos, migrou de funções de suporte e hardware para o desenvolvimento de software avançado, tornando-se programador focado em construir soluções eficientes.</p>
+          </div>
+          <div class="bio-block">
+            <span class="bl-label"><i>02</i> Foco &amp; Especialidade</span>
+            <h3>Automação, IA e sistemas de alta performance</h3>
+            <p>Hoje constrói e programa sistemas voltados à automação de processos e à eficiência operacional: infraestrutura de tecnologia robusta, arquitetura de software e integrações de inteligência artificial que otimizam fluxos de trabalho. Destaca-se por conduzir projetos complexos garantindo a segurança e a escalabilidade de tudo o que entrega.</p>
+          </div>
+          <div class="bio-block">
+            <span class="bl-label"><i>03</i> Visão &amp; Crescimento</span>
+            <h3>Engenharia em escala</h3>
+            <p>Com uma mentalidade analítica e orientada a dados, Matheus lidera a operação de desenvolvimento da MATCHUP, entregando serviços de programação em escala e colaborando com clientes e parceiros — sempre comprometido com inovação, integridade e excelência técnica.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- expertise -->
+  <section class="section reveal">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">O que fazemos</p>
+        <h2>Engenharia ponta a ponta</h2>
+        <p>Da arquitetura à IA em produção — sistemas feitos para durar, escalar e rodar com segurança.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v6H4z"/><path d="M4 15h16v4H4z"/><path d="M8 8h.01M8 17h.01"/></svg></div>
+          <h3>Arquitetura de Software</h3>
+          <p>Sistemas modulares, bem estruturados e sustentáveis, projetados para evoluir sem retrabalho.</p>
+        </div>
+        <div class="card">
+          <div class="card-ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><rect x="8" y="8" width="8" height="8" rx="2"/><path d="M10.5 10.5h3v3h-3z"/></svg></div>
+          <h3>Integrações de IA</h3>
+          <p>Inteligência artificial aplicada para automatizar decisões e otimizar fluxos de trabalho.</p>
+        </div>
+        <div class="card">
+          <div class="card-ic"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v5h-5"/></svg></div>
+          <h3>Automação de Processos</h3>
+          <p>Eliminação de tarefas repetitivas com automação que aumenta a eficiência operacional.</p>
+        </div>
+        <div class="card">
+          <div class="card-ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="5" rx="1.5"/><rect x="3" y="11" width="18" height="5" rx="1.5"/><path d="M7 6.5h.01M7 13.5h.01"/></svg></div>
+          <h3>Infraestrutura Robusta</h3>
+          <p>Infraestrutura de tecnologia confiável, pronta para alta demanda e disponibilidade.</p>
+        </div>
+        <div class="card">
+          <div class="card-ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9.5 12l1.8 1.8 3.2-3.6"/></svg></div>
+          <h3>Segurança &amp; Escalabilidade</h3>
+          <p>Sistemas seguros que crescem com o seu negócio — sem gargalos nem pontos únicos de falha.</p>
+        </div>
+        <div class="card">
+          <div class="card-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18"/></svg></div>
+          <h3>Operações em Escala</h3>
+          <p>Estrutura preparada para atender clientes e parceiros em escala.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- valores -->
+  <section class="section values reveal">
+    <div class="wrap values-grid">
+      <div class="value"><span class="vnum">01</span><h3>Inovação</h3><p>Tecnologia de ponta aplicada a problemas reais.</p></div>
+      <div class="value"><span class="vnum">02</span><h3>Integridade</h3><p>Transparência e responsabilidade em cada entrega.</p></div>
+      <div class="value"><span class="vnum">03</span><h3>Excelência Técnica</h3><p>Qualidade de código e engenharia que resistem ao tempo.</p></div>
+    </div>
+  </section>
+
+  <!-- contato -->
+  <section id="contato" class="section reveal">
+    <div class="wrap">
+      <div class="contact-card">
+        <h2>Vamos construir algo <span class="grad">extraordinário</span>.</h2>
+        <p>Conte pra gente o seu desafio de tecnologia — arquitetura, automação ou inteligência artificial — e transformamos em um sistema sólido, seguro e escalável.</p>
+        <div class="legal-box">
+          <div class="rz">MATCHUP TREINAMENTOS LTDA - ME</div>
+          <div class="cnpj">CNPJ 43.108.423/0001-32</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <span class="foot-brand">MATCHUP<span class="grad">.</span>Treinamentos <span style="font-family:var(--mono);font-size:.7em;color:var(--muted-2)">LTDA</span></span>
+      <span class="foot-meta">MATCHUP TREINAMENTOS LTDA - ME · CNPJ 43.108.423/0001-32 · © 2026</span>
+    </div>
+  </footer>
+
+  <script is:inline>
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</body>
+</html>

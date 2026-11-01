@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-const { title = 'AL – BIO – A Sociedade Trader' } = Astro.props;
+const { title = 'AL – BIO – A Sociedade Trader', noindex = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="pt-BR">
@@ -17,30 +17,22 @@ const { title = 'AL – BIO – A Sociedade Trader' } = Astro.props;
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-K569RL73');</script>
+})(window,document,'script','dataLayer','GTM-TXZ8KFR7');</script>
 <!-- End Google Tag Manager -->
 
-<!-- VK Digital Pixel (sales + page_view) — só na home/principal -->
-<link rel="dns-prefetch" href="https://cf.vkdigital.com.br" />
-<script is:inline>
-!function(w,d,c,u){
-  (w.vkPixelSales=w.vkPixelSales||{_q:[]})._q.push(['init',c]);
-  (w.vkPageViewPixel=w.vkPageViewPixel||{_q:[]})._q.push(['init',c,'page_view']);
-  ['https://cf.vkdigital.com.br/sales_pixel.js?v=56','https://cf.vkdigital.com.br/event_pageview.js'].forEach(function(src,i){
-    var s=d.createElement('script');
-    s.src=src;
-    s.async=1;
-    if(i===0) {
-      s.setAttribute('data-no-xcod-url','');
-    }
-    d.head.appendChild(s);
-  });
-}(window,document,'mZe47LW6iR4rZuYoskrW');
-</script>
-<!-- End VK Digital Pixel -->
+<!-- UTMify (rastreamento de UTMs) -->
+<link rel="dns-prefetch" href="https://cdn.utmify.com.br" />
+<script is:inline
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+<!-- End UTMify -->
 
 <title>{title}</title>
-<meta name="robots" content="max-image-preview:large" />
+<meta name="robots" content={noindex ? 'noindex,nofollow' : 'max-image-preview:large'} />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
 <!-- vturb optimizer: marca o relógio do player o quanto antes (otimizador oficial) -->
@@ -51,16 +43,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://cdn.converteai.net" crossorigin />
 <link rel="preconnect" href="https://images.converteai.net" crossorigin />
 <link rel="dns-prefetch" href="https://license.vturb.com" />
+<link rel="dns-prefetch" href="https://m3u8.vturb.net" />
 <!-- brand font (preloaded so headings paint instantly) -->
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/InstrumentSans-600.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="/assets/InstrumentSans-500.woff2" />
-<!-- above-the-fold images = LCP candidates (hero bg + poster da VSL) -->
+<!-- above-the-fold LCP = fundo do hero (o slot da VSL é 9/16 sem poster; o player é adiado) -->
 <link rel="preload" as="image" href="/assets/hero-bg.webp" fetchpriority="high" />
-<link rel="preload" as="image" href="/assets/poster-vsl.webp" fetchpriority="high" />
+<script is:inline>
+/* Rede de seguranca da headline: nas paginas em que a headline vem do VTURB, a da
+   pagina fica oculta. Se o player NAO carregar (adblock/erro), o placeholder do
+   light DOM continua renderizado (o shadow root nunca foi anexado) -> reexibimos a
+   headline da pagina p/ a dobra nao ficar vazia. */
+(function(){setTimeout(function(){
+  var ph=document.querySelector('.vsl-slot--flex .vturb-player-placeholder');
+  if(ph&&ph.getBoundingClientRect().height>0){
+    document.documentElement.classList.add('vturb-falhou');
+  }
+},8000);})();
+</script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K569RL73" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXZ8KFR7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <slot />
 </body>

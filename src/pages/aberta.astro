@@ -1,0 +1,114 @@
+---
+import Base from '../layouts/Base.astro';
+// TESTE A/B DE PRECO (vturb ab-test 6aac64bb…), 50/50 — "resetado do zero" em 17/09:
+//   A  6aac6243  "VSL PADRAO 297"   midia 6aac61e3 (24:44) -> checkout c938339a (R$297)
+//   B  6aac648f  "FRONT ANTIGO"     midia 6a444ad2 (24:44) -> checkout 5ecd76ce (R$397)
+// Mesmo corte nas duas (371 segmentos identicos, so o preco muda no pitch): pitch 18:03
+// na LINHA DO TEMPO do video nas duas (~15:02 no relogio; player roda em turbo 1.2x).
+// As duas variantes trazem a MESMA headline em imagem pelo vturb -> a da pagina fica oculta (.hl-page).
+// O gate detecta a variante sorteada e troca o checkout do CTA.
+const CHECKOUT = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // default (B) ate detectar
+---
+<Base>
+  <!-- gate: esconde o botão até o vídeo chegar em 18:03 (linha do tempo do video).
+       Roda antes da pintura (sem flash). Sem JS / com ?preview, nada é escondido. -->
+  <script is:inline>try{if(!localStorage.getItem('al_aberta_revealed_v3')&&!/[?&]preview/.test(location.search))document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>
+
+  <!-- ============ HERO (aberta) ============ -->
+  <header class="hero" style="background-image:url(/assets/hero-bg.webp)">
+    <div class="wrap--narrow">
+      <h1 class="hero-title hl-page">
+        Trabalhadores brasileiros estão <span class="green">saindo da CLT</span> com essa nova inteligência artificial.
+      </h1>
+      <p class="hero-sub hl-page">Assista ao vídeo abaixo e veja como fazer um <strong>segundo salário em dólar</strong> ainda essa semana</p>
+      <!-- ===== VSL — player nativo do TESTE A/B do vturb (carrega no load = play-rate real) ===== -->
+      <div class="vsl-slot vsl-slot--flex" id="vsl">
+        <vturb-smartplayer id="ab-6aac64bbdc15da46cd434f86" style="display:block;width:100%">
+          <div class="vturb-player-placeholder" style="position:relative;width:100%;padding:177.78% 0 0;background:#05140b"></div>
+        </vturb-smartplayer>
+      </div>
+      <script is:inline>
+        /* adia o player p/ logo após o 1º paint (fora da janela do LCP): no máx 2s (requestIdleCallback)
+           ou na 1ª interação. Ainda carrega p/ todos que ficam >~1s = play-rate real preservado. */
+        (function(){var SRC='https://scripts.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/ab-test/6aac64bbdc15da46cd434f86/player.js',done=false;function load(){if(done)return;done=true;var s=document.createElement('script');s.src=SRC;s.async=true;document.head.appendChild(s);}if('requestIdleCallback' in window){requestIdleCallback(load,{timeout:2000});}else{setTimeout(load,1500);}['pointerdown','touchstart','scroll','keydown'].forEach(function(e){addEventListener(e,load,{once:true,passive:true});});})();
+      </script>
+
+      <div class="gate" id="hero-cta">
+        <p class="cupom mt-m">CUPOM LIBERADO</p>
+        <div class="cta-wrap"><a class="btn" id="cta-checkout" data-ck href={CHECKOUT}>QUERO TER ACESSO AGORA</a></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- reveal A/B: o CTA aparece quando o VÍDEO chega em 18:03 (mesmo pitch nas duas variantes;
+       tempo na LINHA DO TEMPO do video, nao no relogio: o player roda com turbo 1.2x).
+       A variante vem do id REAL do player: o vturb reescreve <vturb-smartplayer id="ab-…">
+       para "vid-<variante>" ao resolver o teste (fallback: localStorage vturb-ab-<testId>).
+       Cada variante troca o href do CTA pro seu checkout (A -> R$297 · B -> R$397).
+       Fail-open se o player não carregar (adblock). ?preview revela na hora · ?debug mostra variante/tempo. -->
+  <script is:inline>
+    (function () {
+      var AB_KEY = 'vturb-ab-6aac64bbdc15da46cd434f86';
+      var VAR_A = '6aac6243cbca2ded7bfe7157', PITCH_A = 18 * 60 + 3; // A "VSL PADRAO 297": 18:03 = 1083s
+      var VAR_B = '6aac648f76eb195e3e5f14fd', PITCH_B = 18 * 60 + 3; // B "FRONT ANTIGO":   18:03 = 1083s
+      var CK_A = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // R$297
+      var CK_B = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // R$397
+      var PITCH = Math.max(PITCH_A, PITCH_B); // até detectar a variante, usa o maior (nunca revela cedo)
+      var VARIANTE = 'detectando…', CK = '—', lastT = -1;
+      var KEY = 'al_aberta_revealed_v3', t0 = Date.now(), saw = false, revealed = false;
+      function mmss(s) { if (!(s >= 0)) return '--:--'; var m = Math.floor(s / 60), r = Math.floor(s % 60); return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+      // Troca SO a base do checkout e preserva a query que ja estiver no href: o UTMify (Base.astro)
+      // injeta utm_* nos links depois do load, e o tick roda pra sempre -- comparar/reescrever a URL
+      // inteira apagava os UTMs a cada segundo (venda chegava no Payt sem atribuicao).
+      function setCk(u, tag) {
+        var base = u.split('?')[0], as = document.querySelectorAll('a[data-ck]');
+        for (var i = 0; i < as.length; i++) {
+          var cur = as[i].getAttribute('href') || '';
+          if (cur.split('?')[0] === base) continue;                       // ja e este checkout: nao toca
+          var keep = [], q = cur.indexOf('?') > -1 ? cur.slice(cur.indexOf('?') + 1).split('&') : [];
+          for (var k = 0; k < q.length; k++) { if (q[k] && q[k].indexOf('split=') !== 0) keep.push(q[k]); }
+          as[i].setAttribute('href', u + (keep.length ? '&' + keep.join('&') : ''));   // u ja traz ?split=12
+        }
+        CK = tag;
+      }
+      function detect() {
+        var el = document.querySelector('vturb-smartplayer'), id = (el && el.id) ? el.id.replace(/^vid-/, '') : '';
+        if (!id || id.indexOf('ab-') === 0) { try { id = localStorage.getItem(AB_KEY) || ''; } catch (e) { id = ''; } }
+        if (id === VAR_A) { PITCH = PITCH_A; VARIANTE = 'A (297)'; setCk(CK_A, '195c0eb1 R$297'); }
+        else if (id === VAR_B) { PITCH = PITCH_B; VARIANTE = 'B (297)'; setCk(CK_B, '195c0eb1 R$297'); }
+      }
+      function vtime() { try { var a = (window.smartplayer && window.smartplayer.instances) || []; for (var i = 0; i < a.length; i++) { var t = a[i] && a[i].instance && a[i].instance.currentTime; if (typeof t === 'number' && isFinite(t)) return t; } } catch (e) {} return -1; }
+      function reveal() { revealed = true; document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} }
+      var dbg = null;
+      if (/[?&]debug/.test(location.search)) {
+        dbg = document.createElement('div');
+        dbg.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:99999;background:rgba(0,0,0,.85);color:#1eff00;font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;padding:9px 12px;border:1px solid #1eff00;border-radius:8px;pointer-events:none;white-space:pre';
+        var put = function () { if (document.body && !dbg.parentNode) document.body.appendChild(dbg); };
+        put(); document.addEventListener('DOMContentLoaded', put);
+      }
+      function paint() { if (dbg) dbg.textContent = 'variante: ' + VARIANTE + '\npitch:    ' + mmss(PITCH) + '\nvideo:    ' + mmss(lastT) + '\nfalta:    ' + (revealed ? 'liberado' : mmss(PITCH - lastT)) + '\ncheckout: ' + CK; }
+      // O tick roda SEMPRE, inclusive depois de revelar: o href do CTA tem que seguir a variante
+      // sorteada mesmo que o player só carregue depois do fail-open (rede lenta) ou numa volta.
+      function tick() {
+        detect();
+        var t = vtime(); lastT = t;
+        if (t >= 0) saw = true;
+        if (!revealed) {
+          if (t >= PITCH) reveal();
+          else if (!saw && Date.now() - t0 > 30000) reveal(); // fail-open: player não carregou (adblock)
+        }
+        paint();
+      }
+      try { if (/[?&]preview/.test(location.search)) { revealed = true; document.documentElement.classList.remove('gated'); } } catch (e) {}
+      try { if (!revealed && localStorage.getItem(KEY)) reveal(); } catch (e) {}
+      tick();                    // 1ª rodada síncrona: href certo antes de qualquer clique
+      setInterval(tick, 1000);
+    })();
+  </script>
+
+  <footer class="foot">
+    <p>Operar mercados alavancados envolve risco real de perda.</p>
+    <p style="margin-top:8px">MATCHUP TREINAMENTOS LTDA - ME - CNPJ 43.108.423/0001-32</p>
+    <p style="margin-top:8px"><a href="/policy" style="color:inherit;text-decoration:underline;text-underline-offset:2px">Política de Privacidade</a></p>
+  </footer>
+</Base>

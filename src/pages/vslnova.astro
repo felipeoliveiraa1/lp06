@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+// /vslnova — página de TESTE da VSL nova (player 6a99ef0b…, mídia 6a99eea8…).
+// SEM gate/delay: o CTA aparece de cara, porque o tempo do pitch ainda será medido.
+// O player carrega IMEDIATAMENTE (sem requestIdleCallback) + preloads oficiais do vturb.
+const CHECKOUT = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12';
+---
+<Base title="VSL NOVA – A Sociedade Trader">
+  <!-- preloads do player novo (otimizador oficial vturb) -->
+  <link rel="preload" href="https://scripts.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/players/6a99ef0b326cac7b21cec579/v4/player.js" as="script" />
+  <link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script" />
+  <link rel="preload" href="https://cdn.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/6a99eea8feeff8109b7206f2/main.m3u8" as="fetch" />
+
+  <!-- ============ HERO (vslnova) ============ -->
+  <header class="hero" style="background-image:url(/assets/hero-bg.webp)">
+    <div class="wrap--narrow">
+      <h1 class="hero-title">
+        Trabalhadores brasileiros estão <span class="green">saindo da CLT</span> com essa nova inteligência artificial.
+      </h1>
+      <p class="hero-sub">Assista ao vídeo abaixo e veja como fazer um <strong>segundo salário em dólar</strong> ainda essa semana</p>
+
+      <!-- ===== VSL NOVA — player nativo, carrega na hora (SEM delay) ===== -->
+      <div class="vsl-slot" id="vsl">
+        <vturb-smartplayer id="vid-6a99ef0b326cac7b21cec579" style="display:block;width:100%;height:100%"></vturb-smartplayer>
+      </div>
+      <script is:inline>
+        (function(){var s=document.createElement('script');s.src='https://scripts.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/players/6a99ef0b326cac7b21cec579/v4/player.js';s.async=true;document.head.appendChild(s);})();
+      </script>
+
+      <!-- SEM gate: CTA visível desde o início (o pitch ainda será medido) -->
+      <div id="vslnova-cta">
+        <p class="cupom mt-m">CUPOM LIBERADO</p>
+        <div class="cta-wrap"><a class="btn" href={CHECKOUT}>QUERO TER ACESSO AGORA</a></div>
+      </div>
+    </div>
+  </header>
+
+  <footer class="foot">
+    <p>Operar mercados alavancados envolve risco real de perda.</p>
+    <p style="margin-top:8px">MATCHUP TREINAMENTOS LTDA - ME - CNPJ 43.108.423/0001-32</p>
+    <p style="margin-top:8px"><a href="/policy" style="color:inherit;text-decoration:underline;text-underline-offset:2px">Política de Privacidade</a></p>
+  </footer>
+</Base>
