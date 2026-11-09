@@ -10,7 +10,7 @@ import Base from '../layouts/Base.astro';
 //   B  6aac648f  "FRONT ANTIGO"    -> checkout 5ecd76ce (R$397)
 // Mesma VSL, mesmos links e mesmo pitch (18:03 na linha do tempo do video) da /aberta.
 // As duas variantes trazem a headline em imagem pelo vturb -> a da pagina fica oculta (.hl-page).
-const CHECKOUT = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // default (B) ate detectar
+const CHECKOUT = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // default (B) ate detectar
 const A = '/assets/';
 const img = {
   heroBg: A + 'hero-bg.webp',
@@ -366,8 +366,8 @@ const faq = [
       var AB_KEY = 'vturb-ab-6aac64bbdc15da46cd434f86';
       var VAR_A = '6aac6243cbca2ded7bfe7157', PITCH_A = 18 * 60 + 3; // A "VSL PADRAO 297": 18:03 = 1083s
       var VAR_B = '6aac648f76eb195e3e5f14fd', PITCH_B = 18 * 60 + 3; // B "FRONT ANTIGO":   18:03 = 1083s
-      var CK_A = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // R$297
-      var CK_B = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // R$397
+      var CK_A = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // R$297
+      var CK_B = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // R$397
       var PITCH = Math.max(PITCH_A, PITCH_B); // até detectar a variante, usa o maior (nunca revela cedo)
       var VARIANTE = 'detectando…', CK = '—', lastT = -1;
       var PRECO_A = '12X R$ 27,64<small>ou 297 à vista!</small>'; // valores do checkout c938339a

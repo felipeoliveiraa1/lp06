@@ -4,7 +4,7 @@ import Base from '../layouts/Base.astro';
 //   NOVA   6a9b1c22de8d4ffcb0692883 -> pitch 19:15 de video (~16:03 no relogio; player roda em turbo 1.2x)
 //   ANTIGA 6a9b1c1bd50c330afd8ddce0 -> pitch 18:03
 // O gate detecta qual variante o A/B sorteou e usa o tempo certo de cada uma.
-const CHECKOUT = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12';
+const CHECKOUT = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12';
 ---
 <Base>
   <!-- gate: esconde o botão até o vídeo chegar no pitch da variante (19:15 nova / 18:03 antiga, na linha do tempo do video).
@@ -52,7 +52,7 @@ const CHECKOUT = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?
       var VAR_NOVA   = '6a9b1c22de8d4ffcb0692883', PITCH_NOVA   = 19 * 60 + 15; // NOVA:   19:15 = 1155s (medido no player; ~16:03 no relogio a 1.2x)
       var VAR_ANTIGA = '6a9b1c1bd50c330afd8ddce0', PITCH_ANTIGA = 18 * 60 + 3; // ANTIGA: 18:03 = 1083s
       var CK_NOVA   = 'https://checkout.payt.com.br/a80b8395c5f7246bc2e09aff4f75cd47?split=12'; // oferta da VSL nova
-      var CK_ANTIGA = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // oferta da VSL antiga
+      var CK_ANTIGA = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // oferta da VSL antiga
       var PITCH = Math.max(PITCH_NOVA, PITCH_ANTIGA); // até detectar a variante, usa o maior
       var VARIANTE = 'detectando…', CK = '—';
       var KEY = 'al_aula_revealed_v2', iv = null, t0 = Date.now(), saw = false;

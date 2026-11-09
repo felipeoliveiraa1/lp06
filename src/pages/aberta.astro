@@ -7,7 +7,7 @@ import Base from '../layouts/Base.astro';
 // na LINHA DO TEMPO do video nas duas (~15:02 no relogio; player roda em turbo 1.2x).
 // As duas variantes trazem a MESMA headline em imagem pelo vturb -> a da pagina fica oculta (.hl-page).
 // O gate detecta a variante sorteada e troca o checkout do CTA.
-const CHECKOUT = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // default (B) ate detectar
+const CHECKOUT = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // default (B) ate detectar
 ---
 <Base>
   <!-- gate: esconde o botão até o vídeo chegar em 18:03 (linha do tempo do video).
@@ -51,8 +51,8 @@ const CHECKOUT = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?
       var AB_KEY = 'vturb-ab-6aac64bbdc15da46cd434f86';
       var VAR_A = '6aac6243cbca2ded7bfe7157', PITCH_A = 18 * 60 + 3; // A "VSL PADRAO 297": 18:03 = 1083s
       var VAR_B = '6aac648f76eb195e3e5f14fd', PITCH_B = 18 * 60 + 3; // B "FRONT ANTIGO":   18:03 = 1083s
-      var CK_A = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // R$297
-      var CK_B = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // R$397
+      var CK_A = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // R$297
+      var CK_B = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // R$397
       var PITCH = Math.max(PITCH_A, PITCH_B); // até detectar a variante, usa o maior (nunca revela cedo)
       var VARIANTE = 'detectando…', CK = '—', lastT = -1;
       var KEY = 'al_aberta_revealed_v3', t0 = Date.now(), saw = false, revealed = false;
