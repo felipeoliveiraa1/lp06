@@ -5,12 +5,13 @@
 // esta pagina precisa ser refeita a partir dela.
 import Base from '../layouts/Base.astro';
 
-// MESMO TESTE A/B DE PRECO da /aberta (vturb ab-test 6aac64bb…), 50/50:
-//   A  6aac6243  "VSL PADRAO 297"  -> checkout c938339a (R$297)
-//   B  6aac648f  "FRONT ANTIGO"    -> checkout 5ecd76ce (R$397)
+// MESMO TESTE A/B DE VSL da /aberta (vturb ab-test 6af8816e…), 50/50:
+//   A  6af7ec71  "VSL VALIDADA SEM INVESTIR 297"  -> checkout d8612705
+//   B  6af88139  "VSL VALIDADA COM INVESTIR 297"  -> checkout 6eef0821
+// Mesmo preco nas duas; o par de checkouts so separa a venda por variante na Payt.
 // Mesma VSL, mesmos links e mesmo pitch (18:03 na linha do tempo do video) da /aberta.
 // As duas variantes trazem a headline em imagem pelo vturb -> a da pagina fica oculta (.hl-page).
-const CHECKOUT = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // default (B) ate detectar
+const CHECKOUT = 'https://checkout.payt.com.br/d8612705a77a173da4ce15fd7304beae?split=12'; // default (B) ate detectar
 const A = '/assets/';
 const img = {
   heroBg: A + 'hero-bg.webp',
@@ -120,14 +121,14 @@ const faq = [
 
       <!-- ===== VSL — player nativo do TESTE A/B do vturb (carrega no load = play-rate real) ===== -->
       <div class="vsl-slot vsl-slot--flex" id="vsl">
-        <vturb-smartplayer id="ab-6aac64bbdc15da46cd434f86" style="display:block;width:100%">
+        <vturb-smartplayer id="ab-6af8816e6d6c1e496450708b" style="display:block;width:100%">
           <div class="vturb-player-placeholder" style="position:relative;width:100%;padding:177.78% 0 0;background:#05140b"></div>
         </vturb-smartplayer>
       </div>
       <script is:inline>
         /* adia o player p/ logo após o 1º paint (fora da janela do LCP): no máx 2s (requestIdleCallback)
            ou na 1ª interação. Ainda carrega p/ todos que ficam >~1s = play-rate real preservado. */
-        (function(){var SRC='https://scripts.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/ab-test/6aac64bbdc15da46cd434f86/player.js',done=false;function load(){if(done)return;done=true;var s=document.createElement('script');s.src=SRC;s.async=true;document.head.appendChild(s);}if('requestIdleCallback' in window){requestIdleCallback(load,{timeout:2000});}else{setTimeout(load,1500);}['pointerdown','touchstart','scroll','keydown'].forEach(function(e){addEventListener(e,load,{once:true,passive:true});});})();
+        (function(){var SRC='https://scripts.converteai.net/d9544c5d-ba21-4c7b-aa65-b6663bf5494d/ab-test/6af8816e6d6c1e496450708b/player.js',done=false;function load(){if(done)return;done=true;var s=document.createElement('script');s.src=SRC;s.async=true;document.head.appendChild(s);}if('requestIdleCallback' in window){requestIdleCallback(load,{timeout:2000});}else{setTimeout(load,1500);}['pointerdown','touchstart','scroll','keydown'].forEach(function(e){addEventListener(e,load,{once:true,passive:true});});})();
       </script>
 
       <div class="gate" id="hero-cta">
@@ -363,15 +364,15 @@ const faq = [
        Fail-open se o player não carregar (adblock). ?preview revela na hora · ?debug mostra variante/tempo. -->
   <script is:inline>
     (function () {
-      var AB_KEY = 'vturb-ab-6aac64bbdc15da46cd434f86';
-      var VAR_A = '6aac6243cbca2ded7bfe7157', PITCH_A = 18 * 60 + 3; // A "VSL PADRAO 297": 18:03 = 1083s
-      var VAR_B = '6aac648f76eb195e3e5f14fd', PITCH_B = 18 * 60 + 3; // B "FRONT ANTIGO":   18:03 = 1083s
-      var CK_A = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // R$297
-      var CK_B = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // R$397
+      var AB_KEY = 'vturb-ab-6af8816e6d6c1e496450708b';
+      var VAR_A = '6af7ec7140ab0c1e12e4210f', PITCH_A = 18 * 60 + 3; // A "VSL PADRAO 297": 18:03 = 1083s
+      var VAR_B = '6af881397665daa426f8dcbe', PITCH_B = 18 * 60 + 3; // B "FRONT ANTIGO":   18:03 = 1083s
+      var CK_A = 'https://checkout.payt.com.br/d8612705a77a173da4ce15fd7304beae?split=12'; // R$297
+      var CK_B = 'https://checkout.payt.com.br/6eef0821bbe4379821cf30009d0d754c?split=12'; // R$397
       var PITCH = Math.max(PITCH_A, PITCH_B); // até detectar a variante, usa o maior (nunca revela cedo)
       var VARIANTE = 'detectando…', CK = '—', lastT = -1;
-      var PRECO_A = '12X R$ 27,64<small>ou 297 à vista!</small>'; // valores do checkout c938339a
-      var PRECO_B = '12X R$ 27,64<small>ou 297 à vista!</small>'; // mesmo da A: o checkout do front agora e unico (f/195c0eb1, R$297)
+      var PRECO_A = '12X R$ 27,64<small>ou 297 à vista!</small>'; // valores do checkout d8612705
+      var PRECO_B = '12X R$ 27,64<small>ou 297 à vista!</small>'; // mesmo da A: preco igual nas duas variantes (so o checkout muda)
       var KEY = 'al_rmktfull_v1', t0 = Date.now(), saw = false, revealed = false;
       function mmss(s) { if (!(s >= 0)) return '--:--'; var m = Math.floor(s / 60), r = Math.floor(s % 60); return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
       // Troca SO a base do checkout e preserva a query que ja estiver no href: o UTMify (Base.astro)
@@ -392,8 +393,8 @@ const faq = [
       function detect() {
         var el = document.querySelector('vturb-smartplayer'), id = (el && el.id) ? el.id.replace(/^vid-/, '') : '';
         if (!id || id.indexOf('ab-') === 0) { try { id = localStorage.getItem(AB_KEY) || ''; } catch (e) { id = ''; } }
-        if (id === VAR_A) { PITCH = PITCH_A; VARIANTE = 'A (297)'; setCk(CK_A, '195c0eb1 R$297', PRECO_A); }
-        else if (id === VAR_B) { PITCH = PITCH_B; VARIANTE = 'B (297)'; setCk(CK_B, '195c0eb1 R$297', PRECO_B); }
+        if (id === VAR_A) { PITCH = PITCH_A; VARIANTE = 'A SEM INVESTIR'; setCk(CK_A, 'd8612705 SEM INVESTIR', PRECO_A); }
+        else if (id === VAR_B) { PITCH = PITCH_B; VARIANTE = 'B COM INVESTIR'; setCk(CK_B, '6eef0821 COM INVESTIR', PRECO_B); }
       }
       function vtime() { try { var a = (window.smartplayer && window.smartplayer.instances) || []; for (var i = 0; i < a.length; i++) { var t = a[i] && a[i].instance && a[i].instance.currentTime; if (typeof t === 'number' && isFinite(t)) return t; } } catch (e) {} return -1; }
       function reveal() { revealed = true; document.documentElement.classList.remove('gated'); try { localStorage.setItem(KEY, '1'); } catch (e) {} }

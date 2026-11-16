@@ -3,11 +3,11 @@
 // segundo) e SEM teste A/B: VSL unica e checkout unico.
 //   VSL ....: vid-6abea137 (midia 6aac61e3 "VSL PADRAO 297", 24:43) — headline em
 //             imagem pelo vturb, por isso o slot usa .vsl-slot--flex
-//   checkout: c938339a (R$297 — 1x R$267,30 com 10% no cartao, 12x R$27,64)
-// Nao e mais copia fiel da raiz: a raiz roda o A/B (ab-6aac64bb) com checkout de R$397.
+//   checkout: d8612705 (R$297 — 1x R$267,30 com 10% no cartao, 12x R$27,64)
+// Nao e mais copia fiel da raiz: a raiz roda o A/B (ab-6af8816e), dois checkouts.
 import Base from '../layouts/Base.astro';
 
-const CHECKOUT = 'https://checkout.payt.com.br/f/69f35d4779e8c7d3737711d4d5a6bac0?split=12'; // R$297
+const CHECKOUT = 'https://checkout.payt.com.br/d8612705a77a173da4ce15fd7304beae?split=12'; // R$297
 const A = '/assets/';
 const img = {
   heroBg: A + 'hero-bg.webp',
